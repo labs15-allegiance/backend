@@ -2,9 +2,8 @@
 
 module.exports = {
   development: {
-    client: "pg",
+    client: "postgresql",
     connection: {
-      host: "127.0.0.1",
       database: "allegiance",
       user: "user",
       password: "pass"
@@ -23,7 +22,7 @@ module.exports = {
   },
 
   testing: {
-    client: "pg",
+    client: "postgresql",
     connection: {
       host: "127.0.0.1",
       database: "test",
@@ -44,7 +43,7 @@ module.exports = {
   },
 
   production: {
-    client: "pg",
+    client: "postgresql",
     connection: process.env.DATABASE_URL || {
       database: "allegiance",
       user: "user",

@@ -5,6 +5,7 @@ exports.up = function(knex) {
     allegiances.string("allegiance_name").notNullable();
     allegiances.string("image");
     allegiances.string("banner_image");
+    allegiances.string("sport");
   });
 };
 
