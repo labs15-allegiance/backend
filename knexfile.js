@@ -42,6 +42,21 @@ module.exports = {
       directory: "./data/seeds"
     }
   },
+  staging: {
+    client: "pg",
+    connection: process.env.DATABASE_URL || {
+      database: "allegiance",
+      user: "user",
+      password: "pass"
+    },
+    migrations: {
+      directory: "./data/migrations",
+      tableName: "allegiance"
+    },
+    seeds: {
+      directory: "./data/seeds"
+    }
+  },
 
   // staging: {
   //   client: 'postgresql',
