@@ -1,8 +1,7 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('groups').del()
-    .then(function () {
+  
       // Inserts seed entries
       return knex('groups').insert([
         { group_name: 'Las Vegas Raiders Fans', privacy_setting: 'public', location: 89103, creator_id: 1},
@@ -10,7 +9,7 @@ exports.seed = function(knex) {
         { group_name: 'Tennessee Titans Fans', privacy_setting: 'public', location: 33014, creator_id: 2},
         { group_name: 'Buffalo Bills', privacy_setting: 'public', location: 92704, creator_id: 3},
         { group_name: 'New England Patriots Fans', privacy_setting: 'public', location: 89103, creator_id: 3},
-        { group_name: 'New York Jets Fans', privacy_setting: 'private', location: 33014, creator_id: 4},
+        { group_name: 'New York Jets Fans', privacy_setting: 'public', location: 33014, creator_id: 4},
         { group_name: 'Denver Broncos Fans', privacy_setting: 'public', location: 89103, creator_id: 4},
         { group_name: 'Kansas City Chiefs Fans', privacy_setting: 'public', location: 89103, creator_id: 4},
         { group_name: 'LA Chargers Fans', privacy_setting: 'public', location: 89103, creator_id: 5},
@@ -24,8 +23,8 @@ exports.seed = function(knex) {
         { group_name: 'Jacksonville Jaguars Fans', privacy_setting: 'public', location: 89103, creator_id: 7},
         { group_name: 'Dallas Cowboys Fans', privacy_setting: 'public', location: 89103, creator_id: 7},
         { group_name: 'Washington Redskins Fans', privacy_setting: 'public', location: 89103, creator_id: 7},
-        { group_name: 'New York Giants Fans', privacy_setting: 'public', location: 89103, creator_id: 8},
-        { group_name: 'Arizona Cardinals Fans', privacy_setting: 'public', location: 89103, creator_id: 8},
+        { group_name: 'New York Giants Fans', privacy_setting: 'public', location: 89103, creator_id: 1},
+        { group_name: 'Arizona Cardinals Fans', privacy_setting: 'public', location: 89103, creator_id: 1},
         { group_name: 'LA Rams Fans', privacy_setting: 'public', location: 89103, creator_id: 1},
         { group_name: 'San Francisco 49ers Fans', privacy_setting: 'public', location: 89103, creator_id: 2},
         { group_name: 'Seattle Seahawks Fans', privacy_setting: 'public', location: 89103, creator_id: 2},
@@ -34,5 +33,5 @@ exports.seed = function(knex) {
         { group_name: 'Green Bay Packers Fans', privacy_setting: 'public', location: 89103, creator_id: 4},
         
       ]);
-    });
+    
 };

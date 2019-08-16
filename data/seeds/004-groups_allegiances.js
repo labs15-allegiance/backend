@@ -1,8 +1,7 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('groups_allegiances').del()
-    .then(function () {
+  
       // Inserts seed entries
       return knex('groups_allegiances').insert([
         {group_id: 1, allegiance_id: 1},
@@ -36,5 +35,5 @@ exports.seed = function(knex) {
 
         
       ]);
-    });
+    
 };

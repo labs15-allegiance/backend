@@ -1,9 +1,7 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('users').del()
-    .then(function () {
-      // Inserts seed entries
+        // Inserts seed entries
       return knex('users').insert([
         {username: 'micheal', email: 'bob@gmail.com', password: 'pass', location: 89103},
         {username: 'jarred', email: 'jarred@gmail.com', password: 'pass', location: 23602},
@@ -15,5 +13,5 @@ exports.seed = function(knex) {
         {username: 'van', email: 'larry@gmail.com', password: 'pass', location: 89104},
         {username: 'cassandra', email: 'cassandra@gmail.com', password: 'pass', location: 89104},
       ]);
-    });
+    
 };
