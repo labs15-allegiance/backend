@@ -5,8 +5,8 @@ module.exports = {
     client: "postgresql",
     connection: {
       database: "allegiance",
-      user: "user",
-      password: "pass"
+      user: process.env.DB_LOCAL_USER,
+      password: process.env.DB_LOCAL_PASSWORD
     },
     pool: {
       min: 2,

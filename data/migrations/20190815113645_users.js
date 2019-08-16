@@ -13,7 +13,7 @@ exports.up = function(knex) {
       .integer("location")
       .notNullable()
       .comment("This is the location field");
-    users.string("image");
+    users.string("image", 999);
     users.string("banner_image");
     users.text("bio", 999);
   });

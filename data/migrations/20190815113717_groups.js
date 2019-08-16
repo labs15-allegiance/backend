@@ -16,6 +16,7 @@ exports.up = function(knex) {
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
+    groups.string("image", 999);
     groups.timestamps(true, true);
   });
 };

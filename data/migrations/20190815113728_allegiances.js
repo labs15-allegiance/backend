@@ -3,8 +3,8 @@ exports.up = function(knex) {
     allegiances.increments();
 
     allegiances.string("allegiance_name").notNullable();
-    allegiances.string("image");
-    allegiances.string("banner_image");
+    allegiances.string("image", 999);
+    allegiances.string("banner_image", 999);
     allegiances.string("sport");
   });
 };
