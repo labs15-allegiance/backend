@@ -1,12 +1,13 @@
 // Update with your config settings.
+require("dotenv").config();
 
 module.exports = {
   development: {
     client: "postgresql",
     connection: {
-      database: "allegiance",
-      user: "user",
-      password: "pass"
+      database: process.env.DB_LOCAL,
+      user: process.env.DB_LOCAL_USER,
+      password: process.env.DB_LOCAL_PASSWORD
     },
     pool: {
       min: 2,
@@ -25,9 +26,9 @@ module.exports = {
     client: "postgresql",
     connection: {
       host: "127.0.0.1",
-      database: "test",
-      user: "user",
-      password: "pass"
+      database: process.env.DB_LOCAL,
+      user: process.env.DB_LOCAL_USER,
+      password: process.env.DB_LOCAL_PASSWORD
     },
     pool: {
       min: 2,
