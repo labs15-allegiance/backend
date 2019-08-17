@@ -25,7 +25,6 @@ module.exports = {
   testing: {
     client: "postgresql",
     connection: {
-      host: "127.0.0.1",
       database: process.env.DB_LOCAL,
       user: process.env.DB_LOCAL_USER,
       password: process.env.DB_LOCAL_PASSWORD
@@ -46,8 +45,8 @@ module.exports = {
     client: "pg",
     connection: process.env.DATABASE_URL || {
       database: "allegiance",
-      user: "user",
-      password: "pass"
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD
     },
     migrations: {
       directory: "./data/migrations",
@@ -62,8 +61,8 @@ module.exports = {
     client: "postgresql",
     connection: process.env.DATABASE_URL || {
       database: "allegiance",
-      user: "user",
-      password: "pass"
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD
     },
     migrations: {
       directory: "./data/migrations",
