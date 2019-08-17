@@ -13,7 +13,6 @@ exports.seed = function(knex) {
         { group_name: 'Denver Broncos Fans', privacy_setting: 'public', location: 89103, creator_id: 4},
         { group_name: 'Kansas City Chiefs Fans', privacy_setting: 'public', location: 89103, creator_id: 4},
         { group_name: 'LA Chargers Fans', privacy_setting: 'public', location: 89103, creator_id: 5},
-        { group_name: 'Las Vegas Raiders Fans', privacy_setting: 'public', location: 89103, creator_id: 5},
         { group_name: 'Baltimore Ravens Fans', privacy_setting: 'public', location: 89103, creator_id: 5},
         { group_name: 'Cincinatti Bengals Fans', privacy_setting: 'public', location: 89103, creator_id: 5},
         { group_name: 'Cleveland Browns Fans', privacy_setting: 'public', location: 89103, creator_id: 6},

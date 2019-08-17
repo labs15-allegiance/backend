@@ -13,7 +13,6 @@ exports.seed = function(knex) {
         { allegiance_name: 'Denver Broncos', sport: "NFL"},
         { allegiance_name: 'Kansas City Chiefs', sport: "NFL"},
         { allegiance_name: 'LA Chargers', sport: "NFL"},
-        { allegiance_name: 'Las Vegas Raiders', sport: "NFL"},
         { allegiance_name: 'Baltimore Ravens', sport: "NFL"},
         { allegiance_name: 'Cincinatti Bengals', sport: "NFL"},
         { allegiance_name: 'Cleveland Browns', sport: "NFL"},
