@@ -45,7 +45,7 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: process.env.DATABASE_URL || {
-      database: "allegiance",
+      database: process.env.DB,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD
     },
