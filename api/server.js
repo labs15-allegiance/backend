@@ -1,19 +1,29 @@
+// Dependencies
 const express = require("express");
 const helmet = require("helmet");
-
-const server = express();
-const usersRouter = require("../routers/users-router");
-
 const cors = require("cors");
 
-server.use(cors());
-server.use(helmet());
-server.use(express.json());
+// Server instance
+const server = express();
 
+// Library Middleware
+server.use(cors(), helmet(), express.json());
+
+// Routers
+const usersRouter = require("../controllers/user");
+
+// Internal middleware
+const errorHandler = require("../middleware/errorHandling");
+
+// API endpoints
+server.use("/users", usersRouter);
+
+// sanity check
 server.get("/", (req, res) => {
   res.send("Welcome to Allegiance!");
 });
 
-server.use("/users", usersRouter);
+// async error handling. must come AFTER API routes or will raise TypeError
+server.use(errorHandler);
 
 module.exports = server;
