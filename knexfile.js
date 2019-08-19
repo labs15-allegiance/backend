@@ -1,10 +1,11 @@
 // Update with your config settings.
+require("dotenv").config();
 
 module.exports = {
   development: {
     client: "postgresql",
     connection: {
-      database: "allegiance",
+      database: process.env.DB_LOCAL,
       user: process.env.DB_LOCAL_USER,
       password: process.env.DB_LOCAL_PASSWORD
     },
@@ -18,16 +19,16 @@ module.exports = {
     },
     seeds: {
       directory: "./data/seeds"
-    }
+    },
+    useNullAsDefault: true
   },
 
   testing: {
     client: "postgresql",
     connection: {
-      host: "127.0.0.1",
-      database: "test",
-      user: "user",
-      password: "pass"
+      database: process.env.DB_LOCAL,
+      user: process.env.DB_LOCAL_USER,
+      password: process.env.DB_LOCAL_PASSWORD
     },
     pool: {
       min: 2,
@@ -39,15 +40,16 @@ module.exports = {
     },
     seeds: {
       directory: "./data/seeds"
-    }
+    },
+    useNullAsDefault: true
   },
 
   production: {
     client: "postgresql",
     connection: process.env.DATABASE_URL || {
-      database: "allegiance",
-      user: "user",
-      password: "pass"
+      database: process.env.DB,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD
     },
     migrations: {
       directory: "./data/migrations",
@@ -55,6 +57,7 @@ module.exports = {
     },
     seeds: {
       directory: "./data/seeds"
-    }
+    },
+    useNullAsDefault: true
   }
 };
