@@ -6,23 +6,14 @@ const router = express.Router();
 
 router
   .route("/")
-  .get((req, res) => {
-    Users.find()
-      .then(users => {
-        res.json(users);
-      })
-      .catch(err => res.send(err));
+  .get(async (req, res) => {
+    const users = await Users.find();
+    res.status(200).json({ users });
   })
   .post(async (req, res) => {
-    try {
-      const newUser = await req.body;
-      console.log("trying to add user:", newUser);
-      Users.add(newUser).then(user => {
-        res.status(201).json(user);
-      });
-    } catch (error) {
-      res.status(500).json({ error: "Error trying to add new user" });
-    }
+    const newUser = await Users.add(req.body);
+    console.log("trying to add user:", newUser);
+    res.status(201).json({ newUser });
   });
 
 module.exports = router;
