@@ -9,7 +9,7 @@ exports.up = function(knex) {
       .unique()
       .comment("This is the email field");
     users
-      .integer("location")
+      .string("location")
       .notNullable()
       .comment("This is the location field");
     users.string("image", 999);
