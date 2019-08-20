@@ -13,6 +13,7 @@ server.use(cors(), helmet(), express.json());
 const usersRouter = require("../controllers/user");
 const authRouter = require("../controllers/auth");
 const allegiancesRouter = require("../controllers/allegiance");
+const groupsRouter = require('../controllers/groups');
 
 // Internal middleware
 const errorHandler = require("../middleware/errorHandling");
@@ -21,6 +22,7 @@ const errorHandler = require("../middleware/errorHandling");
 server.use("/users", usersRouter);
 server.use("/auth", authRouter);
 server.use('/allegiances', allegiancesRouter);
+server.use('/groups', groupsRouter);
 
 // sanity check
 server.get("/", (req, res) => {
