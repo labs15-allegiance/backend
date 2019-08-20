@@ -4,7 +4,7 @@ exports.up = function(knex) {
 
     users.string("username", 256);
     users
-      .string("email")
+      .string("email", 255)
       .notNullable()
       .unique()
       .comment("This is the email field");
@@ -15,6 +15,8 @@ exports.up = function(knex) {
     users.string("image", 999);
     users.string("banner_image");
     users.text("bio", 999);
+    users.string("first_name", 255);
+    users.string("last_name", 255);
   });
 };
 
