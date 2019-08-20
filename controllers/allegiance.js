@@ -1,19 +1,19 @@
 const express = require("express");
 
-const Users = require("../models/users");
+const Allegiances = require("../models/allegiances");
 
 const router = express.Router();
 
 router
   .route("/")
   .get(async (req, res) => {
-    const users = await Users.find();
-    res.status(200).json({ users });
+    const allegiances = await Allegiances.find();
+    res.status(200).json({ allegiances });
   })
   .post(async (req, res) => {
-    const newUser = await Users.add(req.body);
-    console.log("trying to add user:", newUser);
-    res.status(201).json({ newUser });
+    const newAllegiance = await Allegiances.add(req.body);
+    console.log("trying to add user:", newAllegiance);
+    res.status(201).json({ newAllegiance });
   });
 
 router
@@ -22,20 +22,20 @@ router
     const { id } = req.params;
     const changes = req.body;
     const filter = { id: id }
-    const updated = await Users.update(filter, changes)
+    const updated = await Allegiances.update(filter, changes)
     res.status(200).json({ updated });
   })
   .delete(async (req, res)=> {
     const { id } = req.params;
     const filter = { id: id }
-    const deleted = await Users.remove(filter)
+    const deleted = await Allegiances.remove(filter)
     res.status(200).json({ deleted })
   })
   .get(async (req, res)=> {
     const { id } = req.params;
     const filter = { id: id }
-    const user = await Users.find(filter)
-    res.status(200).json({ user })
+    const allegiance = await Allegiances.find(filter)
+    res.status(200).json({ allegiance })
   })
 
 module.exports = router;
