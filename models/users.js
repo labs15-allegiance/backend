@@ -34,9 +34,9 @@ function find(filters) {
 function update(filter, changes) {
   // only allow one update at a time, so uses .first()
   return db("users")
-    .update(changes)
+    .update(changes, "*")
     .where(filter)
-    //.then(u => find({ id: u[0].id }))
+    .then(u => find({ id: u[0].id }).first())
     
 }
 
