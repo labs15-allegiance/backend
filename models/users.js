@@ -18,7 +18,7 @@ function find(filters) {
   // note that neither return use the .first() method -- it's on a use-by-use basis if that is required or not
   if (filters) {
     return db("users")
-      .select("id", "username", "location", "email", "image", "banner_image", "bio", "first_namea", "last_name")
+      .select("id", "username", "location", "email", "image", "banner_image", "bio", "first_name", "last_name")
       .where(filters);
   }
   return db("users").select(
