@@ -21,7 +21,7 @@ router
 
 router
   .route("/:id")
-  .put(async (req, res) => {
+  .put(validation(userSchema), async (req, res) => {
     const { id } = req.params;
     const changes = req.body;
     const filter = { id: id };
