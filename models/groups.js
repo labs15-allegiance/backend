@@ -1,42 +1,37 @@
 const db = require('../data/db-Config');
 
 module.exports = {
-  find,
-  findById,
-  add,
-  update,
-  remove,
-  addTask,
+  add
 };
 
-function find() {
-    return db('groups');
-  }
-
-// async function findById(id) {
-//     const event = await db('groups')
-//       .where({ id })
-//       .first();
-  
-//     if (group) {
-//       return db('tasks')
-//         .where({ group_id: id })
-//         .then(tasks => {
-//           group.tasks = tasks.map(t => ({ ...t, done: mapBoolean(t.done) }));
-//           return group;
-//         });
-//     } else {
-//       return null;
-//     }
-// }
-
 async function add(group) {
-    try {
-      const [id] = await db('groups').insert(group, 'id');
-  
-      return findById(id);
-    } catch (error) {
-      console.log('error', error);
-    }
+  try {
+
+    const [id] = await db('groups').insert(group, 'id');
+
+    //Creates relevant entry for `users_groups` table as well
+    await db('groups_users').insert({
+      user_id: group.creator_id,
+      user_type: 'admin',
+      group_id: id
+    })
+
+    return findById(id);
+  } catch (error) {
+    console.log('error', error);
   }
-  
+}
+
+async function findById(id) {
+  const group = await db('groups')
+    .where({
+      id
+    })
+    .first();
+
+  if (group) {
+    return group;
+  } else {
+    return null;
+  }
+}

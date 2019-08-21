@@ -22,7 +22,7 @@ const errorHandler = require("../middleware/errorHandling");
 server.use("/users", usersRouter);
 server.use("/auth", authRouter);
 server.use('/allegiances', allegiancesRouter);
-server.use('/groups', groupsRouter);
+server.use('/api/groups', groupsRouter);
 
 // sanity check
 server.get("/", (req, res) => {

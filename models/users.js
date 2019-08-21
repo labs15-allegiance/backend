@@ -3,6 +3,7 @@ const db = require("../data/db-config");
 module.exports = {
   add,
   find,
+  findById,
   update,
   remove
 };
@@ -10,7 +11,9 @@ module.exports = {
 function add(user) {
   return db("users")
     .insert(user, ["*"])
-    .then(u => find({ id: u[0].id }).first());
+    .then(u => find({
+      id: u[0].id
+    }).first());
 }
 
 function find(filters) {
@@ -27,11 +30,25 @@ function find(filters) {
     "location",
     "email",
     "image",
-    "banner_image", 
-    "bio", 
-    "first_name", 
+    "banner_image",
+    "bio",
+    "first_name",
     "last_name"
   );
+}
+
+async function findById(id) {
+  const user = await db('users')
+    .where({
+      id
+    })
+    .first();
+
+  if (user) {
+    return user;
+  } else {
+    return null;
+  }
 }
 
 function update(filter, changes) {
@@ -39,8 +56,10 @@ function update(filter, changes) {
   return db("users")
     .update(changes, "*")
     .where(filter)
-    .then(u => find({ id: u[0].id }).first())
-    
+    .then(u => find({
+      id: u[0].id
+    }).first())
+
 }
 
 function remove(filter) {
