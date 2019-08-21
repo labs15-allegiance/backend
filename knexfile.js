@@ -26,9 +26,9 @@ module.exports = {
   testing: {
     client: "postgresql",
     connection: {
-      database: process.env.DB_LOCAL,
-      user: process.env.DB_LOCAL_USER,
-      password: process.env.DB_LOCAL_PASSWORD
+      database: process.env.DB_TEST,
+      user: process.env.DB_TEST_USER,
+      password: process.env.DB_TEST_PASSWORD
     },
     pool: {
       min: 2,
