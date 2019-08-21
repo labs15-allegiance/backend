@@ -8,6 +8,7 @@ const server = express();
 
 // Library Middleware
 server.use(cors(), helmet(), express.json());
+const authenticate = require("../middleware/auth-middleware");
 
 // Routers
 const usersRouter = require("../controllers/user");
@@ -19,9 +20,9 @@ const groupsRouter = require('../controllers/groups');
 const errorHandler = require("../middleware/errorHandling");
 
 // API endpoints
-server.use("/users", usersRouter);
-server.use("/auth", authRouter);
-server.use('/allegiances', allegiancesRouter);
+server.use("/api/users", authenticate, usersRouter);
+server.use("/api/auth", authRouter);
+server.use('/api/allegiances', authenticate, allegiancesRouter);
 server.use('/api/groups', groupsRouter);
 
 // sanity check

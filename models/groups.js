@@ -5,33 +5,27 @@ module.exports = {
 };
 
 async function add(group) {
-  try {
 
-    const [id] = await db('groups').insert(group, 'id');
+  const {
+    id
+  } = await db('groups').insert(group, 'id');
 
-    //Creates relevant entry for `users_groups` table as well
-    await db('groups_users').insert({
-      user_id: group.creator_id,
-      user_type: 'admin',
-      group_id: id
-    })
+  //Creates relevant entry for `users_groups` table as well
+  await db('groups_users').insert({
+    user_id: group.creator_id,
+    user_type: 'admin',
+    group_id: id
+  })
 
-    return findById(id);
-  } catch (error) {
-    console.log('error', error);
-  }
+  return find(id);
 }
 
-async function findById(id) {
-  const group = await db('groups')
-    .where({
-      id
-    })
-    .first();
 
-  if (group) {
-    return group;
-  } else {
-    return null;
-  }
+function find(filters) {
+  return db('groups')
+    .select("group_name", "privacy_setting", "location", "creator_id", "image", "timestamps")
+    .where(
+      filters
+    )
+    .first();
 }

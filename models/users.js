@@ -37,20 +37,6 @@ function find(filters) {
   );
 }
 
-async function findById(id) {
-  const user = await db('users')
-    .where({
-      id
-    })
-    .first();
-
-  if (user) {
-    return user;
-  } else {
-    return null;
-  }
-}
-
 function update(filter, changes) {
   // only allow one update at a time, so uses .first()
   return db("users")
