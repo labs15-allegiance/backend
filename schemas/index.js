@@ -51,7 +51,8 @@ const groupUserSchema = Joi.object().keys({
     .integer()
     .min(1)
     .required(),
-  user_type: Joi.string().required, //would like to add valid options once we know what they are
+  // Would like to add valid options below once we know what they are
+  user_type: Joi.string().required(),
   group_id: Joi.number()
     .integer()
     .min(1)
