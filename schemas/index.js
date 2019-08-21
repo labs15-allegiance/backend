@@ -35,6 +35,29 @@ const allegianceSchema = Joi.object().keys({
   sport: Joi.string().allow(null)
 });
 
+const groupAllegianceSchema = Joi.object().keys({
+  group_id: Joi.number()
+    .integer()
+    .min(1)
+    .required(),
+  allegiance_id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+});
+
+const groupUserSchema = Joi.object().keys({
+  user_id: Joi.number()
+    .integer()
+    .min(1)
+    .required(),
+  user_type: Joi.string().required, //would like to add valid options once we know what they are
+  group_id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+});
+
 const postSchema = Joi.object().keys({
   group_id: Joi.number()
     .integer()
@@ -45,6 +68,28 @@ const postSchema = Joi.object().keys({
     .min(1)
     .required(),
   post_content: Joi.string().required()
+});
+
+const postLikeSchema = Joi.object().keys({
+  user_id: Joi.number()
+    .integer()
+    .min(1)
+    .required(),
+  post_id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+});
+
+const postTagSchema = Joi.object().keys({
+  post_id: Joi.number()
+    .integer()
+    .min(1)
+    .required(),
+  tagged_user_id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
 });
 
 const replySchema = Joi.object().keys({
@@ -59,10 +104,38 @@ const replySchema = Joi.object().keys({
   reply_content: Joi.string().required()
 });
 
+const replyLikeSchema = Joi.object().keys({
+  user_id: Joi.number()
+    .integer()
+    .min(1)
+    .required(),
+  reply_id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+});
+
+const replyTagSchema = Joi.object().keys({
+  reply_id: Joi.number()
+    .integer()
+    .min(1)
+    .required(),
+  tagged_user_id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+});
+
 module.exports = {
   userSchema,
   groupSchema,
   allegianceSchema,
+  groupAllegianceSchema,
+  groupUserSchema,
   postSchema,
-  replySchema
+  postLikeSchema,
+  postTagSchema,
+  replySchema,
+  replyLikeSchema,
+  replyTagSchema
 };
