@@ -5,21 +5,22 @@ module.exports = {
 };
 
 async function add(group) {
+  console.log('start add function')
 
-  const {
-    id
-  } = await db('groups').insert(group, 'id');
+  const
+    newGroup
+      = await db('groups').insert(group, ['id']);
+  console.log("new group", newGroup)
 
   //Creates relevant entry for `users_groups` table as well
   await db('groups_users').insert({
     user_id: group.creator_id,
     user_type: 'admin',
-    group_id: id
+    group_id: newGroup.id
   })
 
   return find(id);
 }
-
 
 function find(filters) {
   return db('groups')
