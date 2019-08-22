@@ -4,9 +4,9 @@
   "description": "labs 15 Allegiance",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "test": "cross-env DB_ENV=testing jest --watchAll",
+    "start": "node",
+    "server": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -41,5 +41,8 @@
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

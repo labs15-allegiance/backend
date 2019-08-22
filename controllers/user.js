@@ -26,19 +26,31 @@ router
     const changes = req.body;
     const filter = { id: id };
     const updated = await Users.update(filter, changes);
-    res.status(200).json({ updated });
+    if (updated) {
+      res.status(200).json({ updated });
+    } else {
+      res.status(404).json({ message: "That user could not be found." });
+    }
   })
   .delete(async (req, res) => {
     const { id } = req.params;
     const filter = { id: id };
     const deleted = await Users.remove(filter);
-    res.status(200).json({ deleted });
+    if (deleted) {
+      res.status(200).json({ message: "The user has been deleted." });
+    } else {
+      res.status(404).json({ message: "That user could not be found." });
+    }
   })
   .get(async (req, res) => {
     const { id } = req.params;
     const filter = { id: id };
     const user = await Users.find(filter);
-    res.status(200).json({ user });
+    if (user) {
+      res.status(200).json({ user });
+    } else {
+      res.status(404).json({ message: "That user could not be found." });
+    }
   });
 
 module.exports = router;

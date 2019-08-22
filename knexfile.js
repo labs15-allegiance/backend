@@ -14,8 +14,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: "./data/migrations",
-      tableName: "allegiance"
+      directory: "./data/migrations"
     },
     seeds: {
       directory: "./data/seeds"
@@ -26,17 +25,16 @@ module.exports = {
   testing: {
     client: "postgresql",
     connection: {
-      database: process.env.DB_LOCAL,
-      user: process.env.DB_LOCAL_USER,
-      password: process.env.DB_LOCAL_PASSWORD
+      database: process.env.DB_TEST,
+      user: process.env.DB_TEST_USER,
+      password: process.env.DB_TEST_PASSWORD
     },
     pool: {
       min: 2,
       max: 10
     },
     migrations: {
-      directory: "./data/migrations",
-      tableName: "allegiance"
+      directory: "./data/migrations"
     },
     seeds: {
       directory: "./data/seeds"
