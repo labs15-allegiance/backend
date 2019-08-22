@@ -57,14 +57,14 @@ router
   })
   .delete(async (req, res) => {
     const { id } = req.params;
-    const groupExists = await Groups.find({ id }).first();
-    if (!groupExists) {
+    const deleted = await Groups.remove({ id });
+    if (deleted) {
+      res.status(200).json({
+        message: "Group successfully deleted."
+      });
+    } else {
       res.status(404).json({ message: "Group cannot be found" });
     }
-    await Groups.remove(filter);
-    res.status(200).json({
-      message: "Group successfully deleted."
-    });
   })
   .get(async (req, res) => {
     const { id } = req.params;
