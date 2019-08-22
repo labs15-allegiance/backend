@@ -30,10 +30,10 @@ router
     const userExists = await Users.find({ id }).first();
     if (!userExists) {
       res.status(404).json({ message: "That user does not exist." });
+    } else {
+      const updated = await Users.update({ id }, changes);
+      res.status(200).json({ updated });
     }
-    const updated = await Users.update({ id }, changes);
-
-    res.status(200).json({ updated });
   })
   .delete(async (req, res) => {
     const { id } = req.params;
