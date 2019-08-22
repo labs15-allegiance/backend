@@ -21,10 +21,10 @@ function find(filters) {
       db("groups")
         .select("*")
         //   .where(filters);
-        .where("group_name", "like", `%${filters.group_name}%`)
+        .where(`${filters.column}`, "ilike", `%${filters.row}%`)
     );
   }
-  return db("groups");
+  return db("groups").select("*");
 }
 
 function update(filter, changes) {
