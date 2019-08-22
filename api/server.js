@@ -19,9 +19,9 @@ const allegiancesRouter = require("../controllers/allegiance");
 const errorHandler = require("../middleware/errorHandling");
 
 // API endpoints
-server.use("/users", authenticate, usersRouter);
-server.use("/auth", authRouter);
-server.use("/allegiances", authenticate, allegiancesRouter);
+server.use("/api/users", authenticate, usersRouter);
+server.use("/api/auth", authRouter);
+server.use("/api/allegiances", authenticate, allegiancesRouter);
 
 // sanity check
 server.get("/", (req, res) => {
