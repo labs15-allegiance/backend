@@ -14,8 +14,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: "./data/migrations",
-      tableName: "allegiance"
+      directory: "./data/migrations"
     },
     seeds: {
       directory: "./data/seeds"
@@ -35,8 +34,7 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: "./data/migrations",
-      tableName: "allegiance"
+      directory: "./data/migrations"
     },
     seeds: {
       directory: "./data/seeds"
