@@ -19,7 +19,7 @@ router
   //       filteredGroups
   //     });
   //   })
-  .get(async (req, res) => {
+  .post(async (req, res) => {
     const filter = req.body;
     const groupByFilter = await Groups.find(filter);
     res.status(200).json({
