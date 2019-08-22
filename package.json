@@ -4,7 +4,7 @@
   "description": "labs 15 Allegiance",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env DB_ENV=testing jest --watch",
+    "test": "cross-env DB_ENV=testing jest --watchAll",
     "start": "node",
     "server": "nodemon"
   },
