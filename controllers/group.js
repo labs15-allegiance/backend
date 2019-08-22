@@ -1,35 +1,37 @@
 const express = require("express");
 
-const Groups = require("../models/groups");
+const Users = require("../models/users");
+
+const Groups = require("../models/groups.js");
 
 const router = express.Router();
 
 const validation = require("../middleware/dataValidation");
+
 const { groupSchema } = require("../schemas");
 
 router
   .route("/")
-  //   .get(async (req, res) => {
-  //     const filter = req.body;
-  //     const groups = await Groups.find();
-  //     const filteredGroups = groups.filter(group => {
-  //       return group.group_name.includes(filter.group_name);
-  //     });
-  //     res.status(200).json({
-  //       filteredGroups
-  //     });
-  //   })
   .get(async (req, res) => {
-    const filter = req.body;
-    const groupByFilter = await Groups.find(filter);
-    res.status(200).json({
-      groupByFilter
-    });
+    const groups = await Groups.find();
+    res.status(200).json({ groups });
   })
   .post(validation(groupSchema), async (req, res) => {
-    const newGroup = await Groups.add(req.body);
-    console.log("trying to add group:", newGroup);
-    res.status(201).json({ newGroup });
+    const { creator_id } = req.body;
+    const user = await Users.find({
+      id: creator_id
+    }).first();
+    if (user) {
+      const newGroup = await Groups.add(req.body);
+
+      res.status(201).json({
+        newGroup
+      });
+    } else {
+      res.status(404).json({
+        message: "the creator of this group does not exist"
+      });
+    }
   });
 
 router
@@ -37,21 +39,43 @@ router
   .put(validation(groupSchema), async (req, res) => {
     const { id } = req.params;
     const changes = req.body;
-    const filter = { id: id };
-    const updated = await Groups.update(filter, changes);
-    res.status(200).json({ updated });
+    const userExists = await Users.find({
+      id: req.body.creator_id
+    }).first();
+    if (!userExists) {
+      res.status(404).json({ message: "User cannot be found" });
+    }
+    const groupExists = await Groups.find({ id }).first();
+    if (!groupExists) {
+      res.status(404).json({ message: "Group cannot be found" });
+    }
+
+    const updated = await Groups.update({ id }, changes);
+    res.status(200).json({
+      updated
+    });
   })
   .delete(async (req, res) => {
     const { id } = req.params;
-    const filter = { id: id };
-    const deleted = await Groups.remove(filter);
-    res.status(200).json({ deleted });
+    const groupExists = await Groups.find({ id }).first();
+    if (!groupExists) {
+      res.status(404).json({ message: "Group cannot be found" });
+    }
+    await Groups.remove(filter);
+    res.status(200).json({
+      message: "Group successfully deleted."
+    });
   })
   .get(async (req, res) => {
     const { id } = req.params;
-    const filter = { id: id };
-    const group = await Groups.find(filter);
-    res.status(200).json({ group });
+    const group = await Groups.find({ id }).first();
+    if (group && group.id) {
+      res.status(200).json({
+        group
+      });
+    } else {
+      res.status(404).json({ message: "That group does not exist." });
+    }
   });
 
 module.exports = router;
