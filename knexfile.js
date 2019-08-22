@@ -50,8 +50,7 @@ module.exports = {
       password: process.env.DB_PASSWORD
     },
     migrations: {
-      directory: "./data/migrations",
-      tableName: "allegiance"
+      directory: "./data/migrations"
     },
     seeds: {
       directory: "./data/seeds"
