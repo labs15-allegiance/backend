@@ -37,12 +37,13 @@ router
   })
   .delete(async (req, res) => {
     const { id } = req.params;
-    const userExists = await Users.find({ id }).first();
-    if (!userExists) {
+
+    const deleted = await Users.remove({ id });
+    if (deleted) {
+      res.status(200).json({ message: "The user has been deleted." });
+    } else {
       res.status(404).json({ message: "That user does not exist." });
     }
-    await Users.remove({ id });
-    res.status(200).json({ message: "The user has been deleted." });
   })
   .get(async (req, res) => {
     const { id } = req.params;
