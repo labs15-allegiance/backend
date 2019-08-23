@@ -32,7 +32,15 @@ router
         message: "the creator of this group does not exist"
       });
     }
+
+  // endpoint to retrieve groups for fuzzy search
+router.route("/search").post(async (req, res) => {
+  const groupByFilter = await Groups.search(req.body);
+  console.log("getting groups");
+  res.status(200).json({
+    groupByFilter
   });
+});
 
 router
   .route("/:id")

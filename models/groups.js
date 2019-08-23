@@ -3,6 +3,7 @@ const db = require("../data/db-config");
 module.exports = {
   add,
   find,
+  search,
   update,
   remove
 };
@@ -42,6 +43,13 @@ function find(filters) {
       "image"
     );
   }
+}
+
+// added secondary "find" function that performs specific filter using ilike to fuzzy search groups
+function search(filters) {
+  return db("groups")
+    .select("*")
+    .where(`${filters.column}`, "ilike", `%${filters.row}%`);
 }
 
 function update(filter, changes) {
