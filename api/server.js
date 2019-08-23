@@ -23,7 +23,8 @@ const errorHandler = require("../middleware/errorHandling");
 server.use("/api/users", authenticate, usersRouter);
 server.use("/api/auth", authRouter);
 server.use("/api/allegiances", authenticate, allegiancesRouter);
-server.use("/api/groups", groupsRouter);
+server.use("/api/groups", authenticate, groupsRouter);
+
 // sanity check
 server.get("/", (req, res) => {
   res.send("Welcome to Allegiance!");
