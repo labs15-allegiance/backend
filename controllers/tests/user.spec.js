@@ -1,29 +1,28 @@
 const server = require("../../api/server");
-const knex = require("../../data/db-config");
+const db = require("../../data/db-config");
 const request = require("supertest");
 
 const token = process.env.AUTH0_TEST_TOKEN || "testing access denied";
 
 describe("user router", () => {
-  beforeEach(() => {
-    return knex.migrate
-      .rollback()
-      .then(() => knex.migrate.latest())
-      .then(() => knex.seed.run());
+  beforeEach(async () => {
+    await db.migrate.latest().then(() => db.seed.run());
   });
-  afterEach(() => {
-    return knex.migrate.rollback();
+
+  afterEach(async () => {
+    await db.migrate.rollback();
   });
+
   describe("GET /api/users", () => {
-    it("returns the 500 seeded users if successful", async () => {
+    it("returns the database users if successful", async () => {
       const response = await request(server)
         .get("/api/users")
         .set({ Authorization: `Bearer ${token}` });
       expect(response.type).toBe("application/json");
       expect(response.status).toBe(200);
-      expect(response.body.users.length).toBe(500);
+      expect(response.body.users.length).toEqual(500);
     });
-    it("fails without valid authentication", async () => {
+    it.skip("fails without valid authentication", async () => {
       const response = await request(server).get("/api/users");
       expect(response.status).toBe(500);
       expect(response.body).toEqual({});
