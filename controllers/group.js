@@ -47,7 +47,7 @@ router
     }
     const groupExists = await Groups.find({ id }).first();
     if (!groupExists) {
-      res.status(404).json({ message: "Group cannot be found" });
+      res.status(404).json({ message: "That group does not exist." });
     }
 
     const updated = await Groups.update({ id }, changes);
@@ -63,7 +63,7 @@ router
         message: "Group successfully deleted."
       });
     } else {
-      res.status(404).json({ message: "Group cannot be found" });
+      res.status(404).json({ message: "That group does not exist." });
     }
   })
   .get(async (req, res) => {
