@@ -11,12 +11,15 @@ router
   .route("/")
   .get(async (req, res) => {
     const users = await Users.find();
-    res.status(200).json({ users });
+    res.status(200).json({
+      users
+    });
   })
   .post(validation(userSchema), async (req, res) => {
     const newUser = await Users.add(req.body);
-    console.log("trying to add user:", newUser);
-    res.status(201).json({ newUser });
+    res.status(201).json({
+      newUser
+    });
   });
 
 router
@@ -24,21 +27,32 @@ router
   .put(validation(userSchema), async (req, res) => {
     const { id } = req.params;
     const changes = req.body;
-    const filter = { id: id };
-    const updated = await Users.update(filter, changes);
-    res.status(200).json({ updated });
+    const userExists = await Users.find({ id }).first();
+    if (!userExists) {
+      res.status(404).json({ message: "That user does not exist." });
+    } else {
+      const updated = await Users.update({ id }, changes);
+      res.status(200).json({ updated });
+    }
   })
   .delete(async (req, res) => {
     const { id } = req.params;
-    const filter = { id: id };
-    const deleted = await Users.remove(filter);
-    res.status(200).json({ deleted });
+
+    const deleted = await Users.remove({ id });
+    if (deleted) {
+      res.status(200).json({ message: "The user has been deleted." });
+    } else {
+      res.status(404).json({ message: "That user does not exist." });
+    }
   })
   .get(async (req, res) => {
     const { id } = req.params;
-    const filter = { id: id };
-    const user = await Users.find(filter);
-    res.status(200).json({ user });
+    const user = await Users.find({ id }).first();
+    if (user && user.id) {
+      res.status(200).json({ user });
+    } else {
+      res.status(404).json({ message: "That user does not exist." });
+    }
   });
 
 module.exports = router;
