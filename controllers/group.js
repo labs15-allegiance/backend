@@ -8,7 +8,7 @@ const router = express.Router();
 const validation = require("../middleware/dataValidation");
 const { groupSchema } = require("../schemas");
 
-router.route("/").post(async (req, res) => {
+router.route("/search").post(async (req, res) => {
   if (req.body.column === "location") {
     // Takes zip code and optional radius from request body
     const zip = req.body.row;
