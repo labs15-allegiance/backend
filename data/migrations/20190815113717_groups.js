@@ -5,7 +5,7 @@ exports.up = function(knex) {
     groups.string("group_name").notNullable();
     groups.string("privacy_setting").notNullable();
     groups
-      .integer("location")
+      .string("location")
       .notNullable()
       .comment("This is the location field");
     groups
