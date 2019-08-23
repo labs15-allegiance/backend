@@ -1,4 +1,5 @@
 const express = require("express");
+const zipcodes = require("zipcodes");
 
 const Users = require("../models/users");
 
@@ -36,11 +37,22 @@ router
 
 // endpoint to retrieve groups for fuzzy search
 router.route("/search").post(async (req, res) => {
-  const groupByFilter = await Groups.search(req.body);
-  console.log("getting groups");
-  res.status(200).json({
-    groupByFilter
-  });
+  if (req.body.column !== "location") {
+    // Takes zip code and optional radius from request body
+    const zip = req.body.row;
+    const rad = 10 || req.body.radius;
+
+    // Returns an array of zipcodes within mile radius of the zip
+    req.body.row = zipcodes.radius(zip, rad);
+
+    const groupByFilter = await Groups.search(req.body);
+    console.log("getting groups");
+    res.status(200).json({
+      groupByFilter
+    });
+  } else {
+    res.status(400).json({ message: "Location must be provided." });
+  }
 });
 
 router
