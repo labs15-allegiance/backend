@@ -5,6 +5,12 @@ const userSchema = Joi.object().keys({
   email: Joi.string()
     .email({ minDomainSegments: 2 })
     .required(),
+  first_name: Joi.string()
+    .alphanum()
+    .allow(null),
+  last_name: Joi.string()
+    .alphanum()
+    .allow(null),
   location: Joi.string()
     .alphanum()
     .required(),
