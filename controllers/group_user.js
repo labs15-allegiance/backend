@@ -12,10 +12,19 @@ const { groupUsersSchema } = require("../schemas");
 router
 	.route("/")
 	.get(async (req, res) => {
-		const groupUsers = await GroupsUsers.find();
-		res.status(200).json({
-			groupUsers
-		});
+		// check if there are filters present on request body, if so pass filter to find function
+		if (Object.keys(req.body).length > 0) {
+			const groupUsers = await GroupsUsers.find(req.body);
+			res.status(200).json({
+				groupUsers
+			});
+			// if there are no filters being passed on request body, send entire listing of users
+		} else {
+			const groupUsers = await GroupsUsers.find();
+			res.status(200).json({
+				groupUsers
+			});
+		}
 	})
 	.post(validation(groupUsersSchema), async (req, res) => {
 		const { user_id, group_id } = req.body;

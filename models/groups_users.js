@@ -24,7 +24,7 @@ function find(filters) {
 			.where(filters)
 			.select(
 				"g_u.id",
-				"u.id",
+				"u.id as user_id",
 				"u.first_name",
 				"u.last_name",
 				"u.username",
@@ -32,7 +32,7 @@ function find(filters) {
 				"u.location as user_location",
 				"u.image as user_image",
 				"g_u.user_type",
-				"g.id",
+				"g.id as group_id",
 				"g.group_name",
 				"g.creator_id",
 				"g.privacy_setting",
@@ -47,7 +47,7 @@ function find(filters) {
 			.leftJoin("groups as g", "g.id", "g_u.group_id")
 			.select(
 				"g_u.id",
-				"u.id",
+				"u.id as user_id",
 				"u.username",
 				"u.email",
 				"u.location as user_location",
@@ -55,7 +55,7 @@ function find(filters) {
 				"u.last_name",
 				"u.image as user_image",
 				"g_u.user_type",
-				"g.id",
+				"g.id as group_id",
 				"g.group_name",
 				"g.privacy_setting",
 				"g.location as group_location",
