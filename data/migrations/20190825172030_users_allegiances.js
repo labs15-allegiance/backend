@@ -1,17 +1,17 @@
 exports.up = function(knex) {
-	return knex.schema.createTable("groups_allegiances", groups_allegiances => {
-		groups_allegiances.increments();
+	return knex.schema.createTable("users_allegiances", users_allegiances => {
+		users_allegiances.increments();
 
-		groups_allegiances
-			.integer("group_id")
+		users_allegiances
+			.integer("user_id")
 			.unsigned()
 			.notNullable()
 			.references("id")
-			.inTable("groups")
+			.inTable("users")
 			.onDelete("CASCADE")
 			.onUpdate("CASCADE");
 
-		groups_allegiances
+		users_allegiances
 			.integer("allegiance_id")
 			.unsigned()
 			.notNullable()
@@ -23,5 +23,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex, Promise) {
-	return knex.schema.dropTableIfExists("groups_allegiances");
+	return knex.schema.dropTableIfExists("users_allegiances");
 };
