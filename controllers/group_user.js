@@ -1,6 +1,8 @@
 const express = require("express");
 
 const GroupUsers = require("../models/groups_users");
+const Users = require("../models/users");
+const Groups = require("../models/groups");
 
 const router = express.Router();
 
@@ -16,10 +18,24 @@ router
 		});
 	})
 	.post(validation(groupUsersSchema), async (req, res) => {
-		const newGroupUsers = await GroupUsers.add(req.body);
-		res.status(201).json({
-			newGroupUsers
-		});
+		const { user_id, group_id } = req.body;
+		const user = await Users.find({
+			id: user_id
+		}).first();
+		const group = await Groups.find({
+			id: group_id
+		}).first();
+		if (user && group) {
+			const newGroupUsers = await GroupUsers.add(req.body);
+			res.status(201).json({
+				newGroupUsers
+			});
+		} else {
+			res.status(404).json({
+				message:
+					"User id provided or Group id provided does not exist, please double check inputs"
+			});
+		}
 	});
 
 router
