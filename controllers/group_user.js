@@ -52,7 +52,7 @@ router.route("/search").post(async (req, res) => {
 	// check for user_id and group_id in request body
 	const { user_id, group_id } = req.body;
 	// if both user_id and group_id are defined in body move along this branch
-	if (user_id !== undefined || group_id !== undefined) {
+	if (user_id !== undefined && group_id !== undefined) {
 		// find if relation between user and group entered exists, if so return find function from groups_users model
 		const relationExists = await GroupsUsers.find(req.body);
 		console.log("searching for relationship");
