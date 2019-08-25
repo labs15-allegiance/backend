@@ -37,7 +37,7 @@ router
 
 // endpoint to retrieve groups for fuzzy search
 router.route("/search").post(async (req, res) => {
-	if (req.body.column !== undefined && req.body.row !== undefined) {
+	if (req.body.column !== undefined || req.body.row !== undefined) {
 		if (req.body.column === "location") {
 			// Takes zip code and optional radius from request body
 			const zip = req.body.row;
@@ -47,7 +47,7 @@ router.route("/search").post(async (req, res) => {
 			req.body.row = zipcodes.radius(zip, rad);
 		}
 
-		const groupByFilter = await Groups.search(req.body);
+		const groupByFilter = await Groups.find(req.body);
 		console.log("getting groups");
 		res.status(200).json({
 			groupByFilter
