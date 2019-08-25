@@ -37,7 +37,8 @@ function find(filters) {
 				"g.privacy_setting",
 				"g.location as group_location",
 				"g.image as group_image",
-				"g_u.timestamps"
+				"g_u.created_at",
+				"g_u.updated_at"
 			);
 	} else {
 		return db("groups_users as g_u")
@@ -58,7 +59,8 @@ function find(filters) {
 				"g.location as group_location",
 				"g.creator_id",
 				"g.image as group_image",
-				"g_u.timestamps"
+				"g_u.created_at",
+				"g_u.updated_at"
 			);
 	}
 }
