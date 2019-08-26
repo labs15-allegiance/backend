@@ -30,26 +30,12 @@ function find(filters) {
 				.select("*")
 				.whereIn(filters.column, filters.row);
 		}
-		// Checks 1 to 1 text queries with some forgiveness from ilike
+		// Otherwise check for the filter key(s) with singular values passed in
 		return db("groups")
-			.select(
-				"id",
-				"group_name",
-				"privacy_setting",
-				"location",
-				"creator_id",
-				"image"
-			)
+			.select("*")
 			.where(filters);
 	} else {
-		return db("groups").select(
-			"id",
-			"group_name",
-			"privacy_setting",
-			"location",
-			"creator_id",
-			"image"
-		);
+		return db("groups").select("*");
 	}
 }
 
