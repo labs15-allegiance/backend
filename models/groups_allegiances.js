@@ -19,7 +19,7 @@ function add(group_allegiance) {
 function find(filters) {
 	if (filters) {
 		return db("groups_allegiances as g_a")
-			.leftJoin("allegiances as a", "a.id", "g_a.allegiances_id")
+			.leftJoin("allegiances as a", "a.id", "g_a.allegiance_id")
 			.leftJoin("groups as g", "g.id", "g_a.group_id")
 			.where(filters)
 			.select(
@@ -28,11 +28,12 @@ function find(filters) {
 				"group_name",
 				"a.id as allegiance_id",
 				"a.allegiance_name as allegiance_name",
+				"a.image as allegiance_image",
 				"a.sport as sport"
 			);
 	} else {
 		return db("groups_allegiances as g_a")
-			.leftJoin("allegiances as a", "a.id", "g_a.allegiances_id")
+			.leftJoin("allegiances as a", "a.id", "g_a.allegiance_id")
 			.leftJoin("groups as g", "g.id", "g_a.group_id")
 			.select(
 				"g_a.id as id",
@@ -40,6 +41,7 @@ function find(filters) {
 				"group_name",
 				"a.id as allegiance_id",
 				"a.allegiance_name as allegiance_name",
+				"a.image as allegiance_image",
 				"a.sport as sport"
 			);
 	}
