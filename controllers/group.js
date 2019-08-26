@@ -47,7 +47,7 @@ router.route("/search").post(async (req, res) => {
 			req.body.row = zipcodes.radius(zip, rad);
 		}
 
-		const groupByFilter = await Groups.search(req.body);
+		const groupByFilter = await Groups.find(req.body);
 		console.log("getting groups");
 		res.status(200).json({
 			groupByFilter
