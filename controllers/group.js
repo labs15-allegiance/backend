@@ -25,6 +25,12 @@ router.route("/search").post(async (req, res) => {
     const groupByFilter = await Groups.find(req.body);
     console.log("getting groups");
 
+    // Sort results by smallest to largest distance as the crow flies
+    groupByFilter.sort(
+      (a, b) =>
+        zipcodes.distance(a.location, zip) - zipcodes.distance(b.location, zip)
+    );
+
     res.status(200).json({
       groupByFilter
     });
