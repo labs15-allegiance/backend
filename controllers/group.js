@@ -35,7 +35,10 @@ router
     }
   });
 
-// endpoint to retrieve groups for fuzzy search
+// Sets array of columns which need to use find() method rather than fuzzy search, i.e. fuzzy search can't handle ints
+const findColumns = ["id", "creator_id", "privacy_setting"];
+
+// endpoint to retrieve groups for search
 router.route("/search").post(async (req, res) => {
   if (req.body.column === "location") {
     // Ternary check for zip code or text; zip gets passed along as is, city + state gets converted. city and state should be provided as object with those keys
@@ -62,14 +65,27 @@ router.route("/search").post(async (req, res) => {
     res.status(200).json({
       groupByFilter
     });
-  } else if (req.body.column) {
+  }
+  // Branch for columns needing strict find
+  else if (findColumns.includes(req.body.column)) {
+    const groupByFilter = await Groups.find(req.body);
+    console.log("getting groups");
+
+    res.status(200).json({
+      groupByFilter
+    });
+  }
+  // Branch for fuzzy search
+  else if (req.body.column) {
     const groupByFilter = await Groups.search(req.body);
     console.log("getting groups");
 
     res.status(200).json({
       groupByFilter
     });
-  } else {
+  }
+  // Branch for no column provided
+  else {
     const groupByFilter = await Groups.find();
     console.log("getting all groups");
 
