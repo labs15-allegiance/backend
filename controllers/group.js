@@ -38,7 +38,7 @@ router
 // endpoint to retrieve groups for fuzzy search
 router.route("/search").post(async (req, res) => {
   if (req.body.column === "location") {
-    // Ternary check for zip code or text; zip gets passed along as is, city + state gets converted. city and state should be provided as object with those labels
+    // Ternary check for zip code or text; zip gets passed along as is, city + state gets converted. city and state should be provided as object with those keys
     const zip = isNaN(req.body.row)
       ? zipcodes.lookupByName(req.body.row.city, req.body.row.state)[0].zip
       : req.body.row;
