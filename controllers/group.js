@@ -2,8 +2,8 @@ const express = require("express");
 const zipcodes = require("zipcodes");
 
 const Users = require("../models/users");
-
 const Groups = require("../models/groups.js");
+const GroupsAllegiances = require("../models/groups_allegiances.js");
 
 const router = express.Router();
 
@@ -46,8 +46,7 @@ router.route("/search").post(async (req, res) => {
 			// Returns an array of zipcodes within mile radius of the zip
 			req.body.row = zipcodes.radius(zip, rad);
 		}
-
-		const groupByFilter = await Groups.find(req.body);
+		const groupByFilter = await Groups.search(req.body);
 		console.log("getting groups");
 		res.status(200).json({
 			groupByFilter
@@ -92,9 +91,25 @@ router
 	.get(async (req, res) => {
 		const { id } = req.params;
 		const group = await Groups.find({ id }).first();
+		const allegianceCall = await GroupsAllegiances.find({ group_id: id });
+		const allegiances = allegianceCall.map(allegiance => {
+			const {
+				allegiance_id,
+				allegiance_name,
+				allegiance_image,
+				sport
+			} = allegiance;
+			return {
+				id: allegiance_id,
+				name: allegiance_name,
+				image: allegiance_image,
+				sport
+			};
+		});
 		if (group && group.id) {
 			res.status(200).json({
-				group
+				group,
+				allegiances
 			});
 		} else {
 			res.status(404).json({ message: "That group does not exist." });

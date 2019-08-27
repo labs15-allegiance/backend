@@ -179,6 +179,27 @@ exports.seed = function(knex) {
 			group_id: 9,
 			created_at: faker.date.past(),
 			updated_at: faker.date.past()
+		},
+		{
+			user_id: 501,
+			user_type: "admin",
+			group_id: 1,
+			created_at: faker.date.past(),
+			updated_at: faker.date.past()
+		},
+		{
+			user_id: 501,
+			user_type: "member",
+			group_id: 2,
+			created_at: faker.date.past(),
+			updated_at: faker.date.past()
+		},
+		{
+			user_id: 501,
+			user_type: "invited",
+			group_id: 3,
+			created_at: faker.date.past(),
+			updated_at: faker.date.past()
 		}
 	]);
 };

@@ -27,6 +27,9 @@ exports.seed = function(knex) {
 		{ user_id: 2, allegiance_id: 7 },
 		{ user_id: 3, allegiance_id: 8 },
 		{ user_id: 1, allegiance_id: 6 },
-		{ user_id: 3, allegiance_id: 9 }
+		{ user_id: 3, allegiance_id: 9 },
+		{ user_id: 501, allegiance_id: 1 },
+		{ user_id: 501, allegiance_id: 2 },
+		{ user_id: 501, allegiance_id: 3 }
 	]);
 };
