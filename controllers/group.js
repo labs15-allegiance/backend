@@ -46,8 +46,7 @@ router.route("/search").post(async (req, res) => {
 			// Returns an array of zipcodes within mile radius of the zip
 			req.body.row = zipcodes.radius(zip, rad);
 		}
-
-		const groupByFilter = await Groups.find(req.body);
+		const groupByFilter = await Groups.search(req.body);
 		console.log("getting groups");
 		res.status(200).json({
 			groupByFilter
