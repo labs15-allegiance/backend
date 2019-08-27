@@ -63,7 +63,7 @@ router.route("/search").post(async (req, res) => {
       groupByFilter
     });
   } else if (req.body.column) {
-    const groupByFilter = await Groups.find(req.body);
+    const groupByFilter = await Groups.search(req.body);
     console.log("getting groups");
 
     res.status(200).json({
