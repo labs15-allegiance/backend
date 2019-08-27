@@ -10,7 +10,11 @@ module.exports = {
 function add(user) {
   return db("users")
     .insert(user, ["*"])
-    .then(u => find({ id: u[0].id }).first());
+    .then(u =>
+      find({
+        id: u[0].id
+      }).first()
+    );
 }
 
 function find(filters) {
@@ -18,7 +22,17 @@ function find(filters) {
   // note that neither return use the .first() method -- it's on a use-by-use basis if that is required or not
   if (filters) {
     return db("users")
-      .select("id", "username", "location", "email", "image", "banner_image", "bio", "first_name", "last_name")
+      .select(
+        "id",
+        "username",
+        "location",
+        "email",
+        "image",
+        "banner_image",
+        "bio",
+        "first_name",
+        "last_name"
+      )
       .where(filters);
   }
   return db("users").select(
@@ -27,9 +41,9 @@ function find(filters) {
     "location",
     "email",
     "image",
-    "banner_image", 
-    "bio", 
-    "first_name", 
+    "banner_image",
+    "bio",
+    "first_name",
     "last_name"
   );
 }
@@ -37,10 +51,13 @@ function find(filters) {
 function update(filter, changes) {
   // only allow one update at a time, so uses .first()
   return db("users")
-    .update(changes, "*")
+    .update(changes, ["*"])
     .where(filter)
-    .then(u => find({ id: u[0].id }).first())
-    
+    .then(u =>
+      find({
+        id: u[0].id
+      }).first()
+    );
 }
 
 function remove(filter) {
