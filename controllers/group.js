@@ -34,9 +34,16 @@ router.route("/search").post(async (req, res) => {
     res.status(200).json({
       groupByFilter
     });
-  } else {
+  } else if (req.body.column) {
     const groupByFilter = await Groups.find(req.body);
     console.log("getting groups");
+
+    res.status(200).json({
+      groupByFilter
+    });
+  } else {
+    const groupByFilter = await Groups.find();
+    console.log("getting all groups");
 
     res.status(200).json({
       groupByFilter
