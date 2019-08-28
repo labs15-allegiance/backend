@@ -76,18 +76,9 @@ router.route("/search").post(async (req, res) => {
     });
   }
   // Branch for fuzzy search
-  else if (req.body.column) {
+  else {
     const groupByFilter = await Groups.search(req.body);
     console.log("getting groups");
-
-    res.status(200).json({
-      groupByFilter
-    });
-  }
-  // Branch for no column provided
-  else {
-    const groupByFilter = await Groups.find();
-    console.log("getting all groups");
 
     res.status(200).json({
       groupByFilter
