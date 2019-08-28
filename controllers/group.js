@@ -35,25 +35,59 @@ router
     }
   });
 
-// endpoint to retrieve groups for fuzzy search
+// Sets array of columns which need to use find() method rather than fuzzy search, i.e. fuzzy search can't handle ints
+const findColumns = ["id", "creator_id", "privacy_setting"];
+
+// endpoint to retrieve groups for search
 router.route("/search").post(async (req, res) => {
-  if (req.body.column !== undefined && req.body.row !== undefined) {
-    if (req.body.column === "location") {
-      // Takes zip code and optional radius from request body
+  if (req.body.column === "location") {
+    // Ternary check for zip code or text; zip gets passed along as is, city + state gets converted. city and state should be provided as object with those keys
+    if (zipcodes.lookup(req.body.row)) {
       const zip = req.body.row;
+
+      console.log(zip);
+      // Takes optional radius from request or sets default
       const rad = 10 || req.body.radius;
 
       // Returns an array of zipcodes within mile radius of the zip
       req.body.row = zipcodes.radius(zip, rad);
-    }
 
-    const groupByFilter = await Groups.search(req.body);
+      const groupByFilter = await Groups.find(req.body);
+      console.log("getting groups");
+
+      // Sort results by smallest to largest distance as the crow flies
+      groupByFilter.sort(
+        (a, b) =>
+          zipcodes.distance(a.location, zip) -
+          zipcodes.distance(b.location, zip)
+      );
+
+      res.status(200).json({
+        groupByFilter
+      });
+    } else {
+      res.status(400).json({
+        error: `Error during ${req.method} at ${req.originalUrl}: Please provide valid zip code`
+      });
+    }
+  }
+  // Branch for columns needing strict find
+  else if (findColumns.includes(req.body.column)) {
+    const groupByFilter = await Groups.find(req.body);
     console.log("getting groups");
+
     res.status(200).json({
       groupByFilter
     });
-  } else {
-    res.status(400).json({ message: "Column and Row must be provided." });
+  }
+  // Branch for fuzzy search
+  else {
+    const groupByFilter = await Groups.search(req.body);
+    console.log("getting groups");
+
+    res.status(200).json({
+      groupByFilter
+    });
   }
 });
 
@@ -92,6 +126,7 @@ router
   .get(async (req, res) => {
     const { id } = req.params;
     const group = await Groups.find({ id }).first();
+
     const allegianceCall = await GroupsAllegiances.find({ group_id: id });
     const allegiances = allegianceCall.map(allegiance => {
       const {
