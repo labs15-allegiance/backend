@@ -30,7 +30,7 @@ function find(filters) {
         .select("*")
         .whereIn(filters.column, filters.row);
     }
-    // Checks 1 to 1 text queries with some forgiveness from ilike
+    // Checks 1 to 1 queries like id
     return db("groups")
       .select(
         "id",
