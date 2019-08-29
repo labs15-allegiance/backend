@@ -68,11 +68,11 @@ function search(filters) {
 	}
 }
 
-function update(filter, changes) {
+function update(filters, changes) {
 	// only allow one update at a time, so uses .first()
 	return db("groups")
 		.update(changes, ["*"])
-		.where(filters.column, filters.row)
+		.where(filters)
 		.then(g =>
 			find({
 				id: g[0].id
@@ -80,9 +80,9 @@ function update(filter, changes) {
 		);
 }
 
-function remove(filter) {
+function remove(filters) {
 	// only returns the number of deleted entries
 	return db("groups")
-		.where(filters.column, filters.row)
+		.where(filters)
 		.del();
 }
