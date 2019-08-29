@@ -23,28 +23,16 @@ async function add(group) {
 
 function find(filters) {
 	if (filters) {
-		console.log(filters.column, filters.row);
-		// Checks for array being passed to filter.row and checks over it if so
-		if (Array.isArray(filters.row)) {
-			return db("groups")
-				.select("*")
-				.whereIn(filters.column, filters.row);
-		}
-		// Checks 1 to 1 queries like id
-		if (filters.column !== undefined && filters.row !== undefined) {
-			return db("groups")
-				.select(
-					"id",
-					"group_name",
-					"privacy_setting",
-					"location",
-					"creator_id",
-					"image"
-				)
-				.where(filters.column, filters.row);
-		} else {
-			return db("groups").where(filters);
-		}
+		return db("groups")
+			.select(
+				"id",
+				"group_name",
+				"privacy_setting",
+				"location",
+				"creator_id",
+				"image"
+			)
+			.where(filters);
 	} else {
 		return db("groups").select(
 			"id",
@@ -57,11 +45,27 @@ function find(filters) {
 	}
 }
 
+// Sets array of columns which need to use integers or timestamps
+const findColumns = ["id", "creator_id", "created_at", "updated_at"];
+
 // added secondary "find" function that performs specific filter using ilike to fuzzy search groups
 function search(filters) {
-	return db("groups")
-		.select("*")
-		.where(`${filters.column}`, "ilike", `%${filters.row}%`);
+	// Checks for array being passed to filter.row and checks over it if so
+	if (Array.isArray(filters.row)) {
+		return db("groups")
+			.select("*")
+			.whereIn(filters.column, filters.row);
+	} else {
+		if (findColumns.includes(filters.column)) {
+			return db("groups").where(filters.column, filters.row);
+		} else {
+			return db("groups").where(
+				`${filters.column}`,
+				"ilike",
+				`%${filters.row}%`
+			);
+		}
+	}
 }
 
 function update(filter, changes) {
