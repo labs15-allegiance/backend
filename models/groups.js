@@ -43,7 +43,7 @@ function find(filters) {
 				)
 				.where(filters.column, filters.row);
 		} else {
-			return db("groups");
+			return db("groups").where(filters);
 		}
 	} else {
 		return db("groups").select(
