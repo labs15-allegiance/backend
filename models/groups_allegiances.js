@@ -3,7 +3,6 @@ const db = require("../data/db-config");
 module.exports = {
   add,
   find,
-  update,
   remove
 };
 
@@ -45,18 +44,6 @@ function find(filters) {
         "a.sport as sport"
       );
   }
-}
-
-function update(filter, changes) {
-  // only allow one update at a time, so uses .first()
-  return db("groups_allegiances")
-    .update(changes, ["*"])
-    .where(filter)
-    .then(g_a =>
-      find({
-        id: g_a[0].id
-      }).first()
-    );
 }
 
 function remove(filter) {
