@@ -30,10 +30,10 @@ function find(filters) {
 				.select("*")
 				.whereIn(filters.column, filters.row);
 		}
-		// Otherwise check for the filter key(s) with singular values passed in
+		// Checks 1 to 1 queries like id
 		return db("groups")
 			.select("*")
-			.where(filters);
+			.where(filters.column, filters.row);
 	} else {
 		return db("groups").select("*");
 	}
@@ -50,7 +50,7 @@ function update(filter, changes) {
 	// only allow one update at a time, so uses .first()
 	return db("groups")
 		.update(changes, ["*"])
-		.where(filter)
+		.where(filters.column, filters.row)
 		.then(g =>
 			find({
 				id: g[0].id
@@ -61,6 +61,6 @@ function update(filter, changes) {
 function remove(filter) {
 	// only returns the number of deleted entries
 	return db("groups")
-		.where(filter)
+		.where(filters.column, filters.row)
 		.del();
 }
