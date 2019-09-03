@@ -19,15 +19,12 @@ router
   .route("/:id")
   .put(async (req, res) => {
     const { id } = req.params;
-    const changes = req.body;
-    const filter = { id: id };
-    const updated = await Allegiances.update(filter, changes);
+    const updated = await Allegiances.update({ id }, req.body);
     res.status(200).json({ updated });
   })
   .delete(async (req, res) => {
     const { id } = req.params;
-    const filter = { id: id };
-    const deleted = await Allegiances.remove(filter);
+    const deleted = await Allegiances.remove({ id });
     res.status(200).json({ deleted });
   })
   .get(async (req, res) => {
