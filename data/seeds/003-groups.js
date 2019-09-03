@@ -9,15 +9,19 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 1,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/oakland_raiders.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/oakland_raiders.png",
+			acronym: "LVR",
+			description: "Raiders Baby"
 		},
 		{
 			group_name: "Miami Dolphins Fans",
 			privacy_setting: "public",
-			location: "89103",
+			location: "89104",
 			creator_id: 1,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/miami_dolphins.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/miami_dolphins.png",
+			acronym: "MIA",
+			description: "Tank for Tua"
 		},
 		{
 			group_name: "Tennessee Titans Fans",
@@ -25,7 +29,9 @@ exports.seed = function(knex) {
 			location: "33014",
 			creator_id: 2,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/tennessee_titans.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/tennessee_titans.png",
+			acronym: "TEN",
+			description: "Titans Fans"
 		},
 		{
 			group_name: "Buffalo Bills",
@@ -33,15 +39,19 @@ exports.seed = function(knex) {
 			location: "92704",
 			creator_id: 3,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/buffalo_bills.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/buffalo_bills.png",
+			acronym: "BUF",
+			description: "Bills Fans"
 		},
 		{
 			group_name: "New England Patriots Fans",
 			privacy_setting: "public",
-			location: "89103",
+			location: "89105",
 			creator_id: 3,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_england_patriots.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_england_patriots.png",
+			acronym: "NE",
+			description: "Patriots Fans"
 		},
 		{
 			group_name: "New York Jets Fans",
@@ -49,39 +59,49 @@ exports.seed = function(knex) {
 			location: "33014",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_york_jets.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_york_jets.png",
+			acronym: "NYJ",
+			description: "Jets Fans"
 		},
 		{
 			group_name: "Denver Broncos Fans",
 			privacy_setting: "public",
-			location: "89103",
+			location: "89106",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/denver_broncos.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/denver_broncos.png",
+			acronym: "DEN",
+			description: "Broncos Fans"
 		},
 		{
 			group_name: "Kansas City Chiefs Fans",
 			privacy_setting: "public",
-			location: "89103",
+			location: "89102",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/kansas_city_chiefs.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/kansas_city_chiefs.png",
+			acronym: "KC",
+			description: "Chiefs Fans"
 		},
 		{
 			group_name: "LA Chargers Fans",
 			privacy_setting: "public",
-			location: "89103",
+			location: "89101",
 			creator_id: 5,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/los_angeles_chargers.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/los_angeles_chargers.png",
+			acronym: "LAC",
+			description: "Chargers Fans"
 		},
 		{
 			group_name: "Baltimore Ravens Fans",
 			privacy_setting: "public",
-			location: "89103",
+			location: "89100",
 			creator_id: 5,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/baltimore_ravens.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/baltimore_ravens.png",
+			acronym: "BAL",
+			description: "Ravens Fans"
 		},
 		{
 			group_name: "Cincinatti Bengals Fans",
@@ -89,7 +109,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 5,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/cincinnati_bengals.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/cincinnati_bengals.png",
+			acronym: "CIN",
+			description: "Bengals Fans"
 		},
 		{
 			group_name: "Cleveland Browns Fans",
@@ -97,7 +119,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 6,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/cleveland_browns.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/cleveland_browns.png",
+			acronym: "CLE",
+			description: "Browns Fans"
 		},
 		{
 			group_name: "Pittsburgh Steelers Fans",
@@ -105,7 +129,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 6,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/pittsburgh_steelers.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/pittsburgh_steelers.png",
+			acronym: "PIT",
+			description: "Steelers Fans"
 		},
 		{
 			group_name: "Houston Texans Fans",
@@ -113,7 +139,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 6,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/houston_texans.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/houston_texans.png",
+			acronym: "HOU",
+			description: "Texans Fans"
 		},
 		{
 			group_name: "Indianapolis Colts Fans",
@@ -121,7 +149,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 6,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/indianapolis_colts.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/indianapolis_colts.png",
+			acronym: "IND",
+			description: "Colts Fans"
 		},
 		{
 			group_name: "Jacksonville Jaguars Fans",
@@ -129,7 +159,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 7,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/jacksonville_jaguars.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/jacksonville_jaguars.png",
+			acronym: "JAX",
+			description: "Jaguars Fans"
 		},
 		{
 			group_name: "Dallas Cowboys Fans",
@@ -137,7 +169,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 7,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/dallas_cowboys.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/dallas_cowboys.png",
+			acronym: "DAL",
+			description: "Cowboys Fans"
 		},
 		{
 			group_name: "Washington Redskins Fans",
@@ -145,7 +179,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 7,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/washington_redskins.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/washington_redskins.png",
+			acronym: "WAS",
+			description: "Redskins Fans"
 		},
 		{
 			group_name: "New York Giants Fans",
@@ -153,7 +189,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 1,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_york_giants.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_york_giants.png",
+			acronym: "NYG",
+			description: "Giants Fans"
 		},
 		{
 			group_name: "Arizona Cardinals Fans",
@@ -161,7 +199,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 1,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/arizona_cardinals.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/arizona_cardinals.png",
+			acronym: "AZ",
+			description: "Cardinals Fans"
 		},
 		{
 			group_name: "LA Rams Fans",
@@ -169,7 +209,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 1,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/los_angeles_rams.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/los_angeles_rams.png",
+			acronym: "LAR",
+			description: "Rams Fans"
 		},
 		{
 			group_name: "San Francisco 49ers Fans",
@@ -177,7 +219,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 2,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/san_francisco_49ers.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/san_francisco_49ers.png",
+			acronym: "SF",
+			description: "49ers Fans"
 		},
 		{
 			group_name: "Seattle Seahawks Fans",
@@ -185,7 +229,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 2,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/seattle_seahawks.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/seattle_seahawks.png",
+			acronym: "SEA",
+			description: "Seahawks Fans"
 		},
 		{
 			group_name: "Chicago Bears Fans",
@@ -193,7 +239,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 3,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/chicago_bears.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/chicago_bears.png",
+			acronym: "CHI",
+			description: "Bears Fans"
 		},
 		{
 			group_name: "Detroit Lions Fans",
@@ -201,7 +249,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 3,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/detroit_lions.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/detroit_lions.png",
+			acronym: "DET",
+			description: "Lions Fans"
 		},
 		{
 			group_name: "Green Bay Packers Fans",
@@ -209,7 +259,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/green_bay_packers.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/green_bay_packers.png",
+			acronym: "GB",
+			description: "Packers Fans"
 		},
 		{
 			group_name: "Minnesota Vikings Fans",
@@ -217,7 +269,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/minnesota_vikings.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/minnesota_vikings.png",
+			acronym: "MIN",
+			description: "Vikings Fans"
 		},
 		{
 			group_name: "Atlanta Falcons Fans",
@@ -225,7 +279,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/atlanta_falcons.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/atlanta_falcons.png",
+			acronym: "ATL",
+			description: "Falcons Fans"
 		},
 		{
 			group_name: "Carolina Panthers Fans",
@@ -233,7 +289,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/carolina_panthers.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/carolina_panthers.png",
+			acronym: "CAR",
+			description: "Panthers Fans"
 		},
 		{
 			group_name: "New Orleans Saints Fans",
@@ -241,7 +299,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_orleans_saints.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/new_orleans_saints.png",
+			acronym: "NO",
+			description: "Saints Fans"
 		},
 		{
 			group_name: "Tampa Bay Buccaneers Fans",
@@ -249,7 +309,9 @@ exports.seed = function(knex) {
 			location: "89103",
 			creator_id: 4,
 			image:
-				"https://cdn.bleacherreport.net/images/team_logos/328x328/tampa_bay_buccaneers.png"
+				"https://cdn.bleacherreport.net/images/team_logos/328x328/tampa_bay_buccaneers.png",
+			acronym: "TB",
+			description: "Buccaneers Fans"
 		}
 	]);
 };
