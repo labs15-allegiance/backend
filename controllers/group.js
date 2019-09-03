@@ -4,6 +4,7 @@ const zipcodes = require("zipcodes");
 const Users = require("../models/users");
 const Groups = require("../models/groups.js");
 const GroupsAllegiances = require("../models/groups_allegiances.js");
+const GroupsUsers = require("../models/groups_users");
 
 const router = express.Router();
 
@@ -35,13 +36,10 @@ router
     }
   });
 
-// Sets array of columns which need to use find() method rather than fuzzy search, i.e. fuzzy search can't handle ints
-const findColumns = ["id", "creator_id", "privacy_setting"];
-
 // endpoint to retrieve groups for search
 router.route("/search").post(async (req, res) => {
   if (req.body.column === "location") {
-    // Ternary check for zip code or text; zip gets passed along as is, city + state gets converted. city and state should be provided as object with those keys
+    // Use zipcodes package to search for zip codes
     if (zipcodes.lookup(req.body.row)) {
       const zip = req.body.row;
 
@@ -52,7 +50,7 @@ router.route("/search").post(async (req, res) => {
       // Returns an array of zipcodes within mile radius of the zip
       req.body.row = zipcodes.radius(zip, rad);
 
-      const groupByFilter = await Groups.find(req.body);
+      const groupByFilter = await Groups.search(req.body);
       console.log("getting groups");
 
       // Sort results by smallest to largest distance as the crow flies
@@ -67,26 +65,28 @@ router.route("/search").post(async (req, res) => {
       });
     } else {
       res.status(400).json({
-        error: `Error during ${req.method} at ${req.originalUrl}: Please provide valid zip code`
+        error: `Error during ${req.method} at ${
+          req.originalUrl
+        }: Please provide valid zip code`
       });
     }
   }
-  // Branch for columns needing strict find
-  else if (findColumns.includes(req.body.column)) {
-    const groupByFilter = await Groups.find(req.body);
-    console.log("getting groups");
-
-    res.status(200).json({
-      groupByFilter
-    });
-  }
-  // Branch for fuzzy search
+  // Branch for non location searches
   else {
-    const groupByFilter = await Groups.search(req.body);
+    const groups = await Groups.search(req.body);
     console.log("getting groups");
+    const group_id = groups.map(group => group.id);
 
+    const members = await GroupsUsers.find({ group_id });
+    const groupByFilter = groups.map(group => {
+      return {
+        ...group,
+        members: members.filter(member => member.group_id === group.id)
+      };
+    });
     res.status(200).json({
-      groupByFilter
+      groupByFilter,
+      members
     });
   }
 });
@@ -142,10 +142,34 @@ router
         sport
       };
     });
+
+    const userCall = await GroupsUsers.find({ group_id: id });
+    const members = userCall.map(member => {
+      const {
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email,
+        user_location,
+        user_image,
+        user_type
+      } = member;
+      return {
+        id: user_id,
+        name: `${first_name} ${last_name}`,
+        image: user_image,
+        username,
+        email,
+        location: user_location,
+        status: user_type
+      };
+    });
     if (group && group.id) {
       res.status(200).json({
         group,
-        allegiances
+        allegiances,
+        members
       });
     } else {
       res.status(404).json({ message: "That group does not exist." });
