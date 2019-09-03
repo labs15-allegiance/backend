@@ -16,6 +16,7 @@ const authRouter = require("../controllers/auth");
 const allegiancesRouter = require("../controllers/allegiance");
 const groupsRouter = require("../controllers/group");
 const groupsUsersRouter = require("../controllers/group_user");
+const groupsAllegiancesRouter = require("../controllers/group_allegiance");
 
 // Internal middleware
 const errorHandler = require("../middleware/errorHandling");
@@ -26,6 +27,7 @@ server.use("/api/auth", authRouter);
 server.use("/api/allegiances", authenticate, allegiancesRouter);
 server.use("/api/groups", authenticate, groupsRouter);
 server.use("/api/groups_users", authenticate, groupsUsersRouter);
+server.use("/api/groups_allegiances", authenticate, groupsAllegiancesRouter);
 
 // sanity check
 server.get("/", (req, res) => {

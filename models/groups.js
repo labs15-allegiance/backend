@@ -23,48 +23,42 @@ async function add(group) {
 
 function find(filters) {
 	if (filters) {
-		console.log(filters.column, filters.row);
-		// Checks for array being passed to filter.row and checks over it if so
-		if (Array.isArray(filters.row)) {
-			return db("groups")
-				.select("*")
-				.whereIn(filters.column, filters.row);
-		}
-		// Checks 1 to 1 text queries with some forgiveness from ilike
 		return db("groups")
-			.select(
-				"id",
-				"group_name",
-				"privacy_setting",
-				"location",
-				"creator_id",
-				"image"
-			)
+			.select("*")
 			.where(filters);
 	} else {
-		return db("groups").select(
-			"id",
-			"group_name",
-			"privacy_setting",
-			"location",
-			"creator_id",
-			"image"
-		);
+		return db("groups").select("*");
 	}
 }
 
+// Sets array of columns which need to use integers or timestamps
+const findColumns = ["id", "creator_id", "created_at", "updated_at"];
+
 // added secondary "find" function that performs specific filter using ilike to fuzzy search groups
 function search(filters) {
-	return db("groups")
-		.select("*")
-		.where(`${filters.column}`, "ilike", `%${filters.row}%`);
+	// Checks for array being passed to filter.row and checks over it if so
+	if (Array.isArray(filters.row)) {
+		return db("groups")
+			.select("*")
+			.whereIn(filters.column, filters.row);
+	} else {
+		if (findColumns.includes(filters.column)) {
+			return db("groups").where(filters.column, filters.row);
+		} else {
+			return db("groups").where(
+				`${filters.column}`,
+				"ilike",
+				`%${filters.row}%`
+			);
+		}
+	}
 }
 
-function update(filter, changes) {
+function update(filters, changes) {
 	// only allow one update at a time, so uses .first()
 	return db("groups")
 		.update(changes, ["*"])
-		.where(filter)
+		.where(filters)
 		.then(g =>
 			find({
 				id: g[0].id
@@ -72,9 +66,9 @@ function update(filter, changes) {
 		);
 }
 
-function remove(filter) {
+function remove(filters) {
 	// only returns the number of deleted entries
 	return db("groups")
-		.where(filter)
+		.where(filters)
 		.del();
 }
