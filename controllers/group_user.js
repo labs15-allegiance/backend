@@ -7,7 +7,7 @@ const Groups = require("../models/groups");
 const router = express.Router();
 
 const validation = require("../middleware/dataValidation");
-const { groupUsersSchema } = require("../schemas");
+const { groupUserSchema } = require("../schemas");
 
 router
 	.route("/")
@@ -15,6 +15,7 @@ router
 		// check if there are filters present on request body, if so pass filter to find function
 		if (Object.keys(req.body).length > 0) {
 			const groupUsers = await GroupsUsers.find(req.body);
+			console.log(req.body);
 			res.status(200).json({
 				groupUsers
 			});
@@ -26,7 +27,7 @@ router
 			});
 		}
 	})
-	.post(validation(groupUsersSchema), async (req, res) => {
+	.post(validation(groupUserSchema), async (req, res) => {
 		const { user_id, group_id } = req.body;
 		const user = await Users.find({
 			id: user_id
@@ -89,10 +90,10 @@ router.route("/search").post(async (req, res) => {
 
 router
 	.route("/:id")
-	.put(validation(groupUsersSchema), async (req, res) => {
+	.put(validation(groupUserSchema), async (req, res) => {
 		const { id } = req.params;
 		const changes = req.body;
-		const relationExists = await GroupsUsers.find({ id }).first();
+		const relationExists = await GroupsUsers.find({ "g_u.id": id }).first();
 		if (!relationExists) {
 			res
 				.status(404)
@@ -118,7 +119,7 @@ router
 	})
 	.get(async (req, res) => {
 		const { id } = req.params;
-		const groupUsers = await GroupsUsers.find({ id }).first();
+		const groupUsers = await GroupsUsers.find({ "g_u.id": id }).first();
 		if (groupUsers && groupUsers.id) {
 			res.status(200).json({ groupUsers });
 		} else {
