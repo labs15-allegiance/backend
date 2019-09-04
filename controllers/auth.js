@@ -15,7 +15,8 @@ router.route("/").post(async (req, res) => {
           {
             "name": group.group_name,
             "image": group.group_image,
-            "id": group.group_id
+            "id": group.group_id,
+            "user_type": group.user_type
           }
         )
       })
