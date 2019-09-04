@@ -22,7 +22,7 @@ describe("user router", () => {
       expect(response.status).toBe(200);
       expect(response.body.users.length).toEqual(500);
     });
-    it.skip("fails without valid authentication", async () => {
+    it("fails without valid authentication", async () => {
       const response = await request(server).get("/api/users");
       expect(response.status).toBe(500);
       expect(response.body).toEqual({});
@@ -49,6 +49,9 @@ describe("user router", () => {
         .send({ ...newUser, email: null })
         .set({ Authorization: `Bearer ${token}` });
       expect(response.status).toBe(400);
+      expect(response.body.error).toBe(
+        'Error during POST at /api/users: "email" must be a string'
+      );
     });
   });
 
