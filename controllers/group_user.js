@@ -84,7 +84,26 @@ router.route("/search").post(async (req, res) => {
 		}
 		// if either user_id and group_id are undefined throw 400 message
 	} else {
-		res.status(400).json({ message: "Column and Row must be provided." });
+		res.status(400).json({ message: "User_id and group_id must be provided." });
+	}
+});
+
+// endpoint to retrieve all groups for a user
+router.route("/search/:user_id").get(async (req, res) => {
+	// obtain user_id from params
+	const { user_id } = req.params;
+	// find if user has any groups
+	const groups = await GroupsUsers.find({ user_id });
+	console.log("searching for groups");
+	if (groups.length > 0) {
+		res.status(200).json({
+			groups
+		});
+		// if user does not exist or does not have any groups
+	} else {
+		res.status(404).json({
+			message: "User id provided does not exist or has no groups"
+		});
 	}
 });
 
