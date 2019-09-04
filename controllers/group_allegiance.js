@@ -68,7 +68,7 @@ router
     const groupAllegiances = await GroupsAllegiances.find({
       "g_a.id": id
     }).first();
-    if (groupAllegiances && groupAllegiances.id) {
+    if (groupAllegiances) {
       res.status(200).json({ groupAllegiances });
     } else {
       res
