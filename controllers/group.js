@@ -3,8 +3,8 @@ const zipcodes = require("zipcodes");
 
 const Users = require("../models/users");
 const Groups = require("../models/groups.js");
-const GroupsUsers = require("../models/groups_users.js");
 const GroupsAllegiances = require("../models/groups_allegiances.js");
+const GroupsUsers = require("../models/groups_users");
 
 const router = express.Router();
 
@@ -84,11 +84,20 @@ router.route("/search").post(async (req, res) => {
   }
   // Branch for non location searches
   else {
-    const groupByFilter = await Groups.search(req.body);
+    const groups = await Groups.search(req.body);
     console.log("getting groups");
+    const group_id = groups.map(group => group.id);
 
+    const members = await GroupsUsers.find({ group_id });
+    const groupByFilter = groups.map(group => {
+      return {
+        ...group,
+        members: members.filter(member => member.group_id === group.id)
+      };
+    });
     res.status(200).json({
-      groupByFilter
+      groupByFilter,
+      members
     });
   }
 });
@@ -128,13 +137,6 @@ router
   .get(async (req, res) => {
     const { id } = req.params;
     const group = await Groups.find({ id }).first();
-    // Finds group members and stores wanted data from them in array
-    const memberCall = await GroupsUsers.find({ group_id: id });
-    const members = memberCall.map(member => {
-      const { user_id, username, email, user_type } = member;
-      return { user_id, username, email, user_type };
-    });
-    // Finds group allegiances and stores wanted data from them in array
     const allegianceCall = await GroupsAllegiances.find({ group_id: id });
     const allegiances = allegianceCall.map(allegiance => {
       const {
@@ -150,7 +152,30 @@ router
         sport
       };
     });
-    if (group) {
+
+    const userCall = await GroupsUsers.find({ group_id: id });
+    const members = userCall.map(member => {
+      const {
+        user_id,
+        username,
+        first_name,
+        last_name,
+        email,
+        user_location,
+        user_image,
+        user_type
+      } = member;
+      return {
+        id: user_id,
+        name: `${first_name} ${last_name}`,
+        image: user_image,
+        username,
+        email,
+        location: user_location,
+        status: user_type
+      };
+    });
+    if (group && group.id) {
       res.status(200).json({
         group,
         allegiances,

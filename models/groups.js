@@ -24,24 +24,10 @@ async function add(group) {
 function find(filters) {
 	if (filters) {
 		return db("groups")
-			.select(
-				"id",
-				"group_name",
-				"privacy_setting",
-				"location",
-				"creator_id",
-				"image"
-			)
+			.select("*")
 			.where(filters);
 	} else {
-		return db("groups").select(
-			"id",
-			"group_name",
-			"privacy_setting",
-			"location",
-			"creator_id",
-			"image"
-		);
+		return db("groups").select("*");
 	}
 }
 

@@ -31,7 +31,9 @@ const groupSchema = Joi.object().keys({
     .integer()
     .min(1)
     .required(),
-  image: Joi.string().allow(null)
+  image: Joi.string().allow(null),
+  acronym: Joi.string().allow(null),
+  description: Joi.string().allow(null)
 });
 
 const allegianceSchema = Joi.object().keys({
