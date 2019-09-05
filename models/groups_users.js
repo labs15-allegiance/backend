@@ -12,7 +12,7 @@ function add(group_user) {
     db("groups_users")
       // user_id, user_type, group_id required
       .insert(group_user, ["*"])
-      .then(g_u => find({ id: g_u[0].id }).first())
+      .then(g_u => find({ "g_u.id": g_u[0].id }).first())
   );
 }
 
@@ -100,7 +100,7 @@ function update(filter, changes) {
     .where(filter)
     .then(g_u =>
       find({
-        id: g_u[0].id
+        "g_u.id": g_u[0].id
       }).first()
     );
 }
