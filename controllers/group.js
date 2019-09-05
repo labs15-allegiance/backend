@@ -50,9 +50,17 @@ router.route("/search").post(async (req, res) => {
       // Returns an array of zipcodes within mile radius of the zip
       req.body.row = zipcodes.radius(zip, rad);
 
-      const groupByFilter = await Groups.search(req.body);
-      console.log("getting groups");
+      const groups = await Groups.search(req.body);
+      const group_id = groups.map(group => group.id);
 
+      const members = await GroupsUsers.find({ group_id });
+      console.log("getting groups");
+      const groupByFilter = groups.map(group => {
+        return {
+          ...group,
+          members: members.filter(member => member.group_id === group.id)
+        };
+      });
       // Sort results by smallest to largest distance as the crow flies
       groupByFilter.sort(
         (a, b) =>
@@ -61,13 +69,12 @@ router.route("/search").post(async (req, res) => {
       );
 
       res.status(200).json({
-        groupByFilter
+        groupByFilter,
+        members
       });
     } else {
       res.status(400).json({
-        error: `Error during ${req.method} at ${
-          req.originalUrl
-        }: Please provide valid zip code`
+        error: `Error during ${req.method} at ${req.originalUrl}: Please provide valid zip code`
       });
     }
   }
@@ -126,7 +133,6 @@ router
   .get(async (req, res) => {
     const { id } = req.params;
     const group = await Groups.find({ id }).first();
-
     const allegianceCall = await GroupsAllegiances.find({ group_id: id });
     const allegiances = allegianceCall.map(allegiance => {
       const {
