@@ -17,6 +17,7 @@ const allegiancesRouter = require("../controllers/allegiance");
 const groupsRouter = require("../controllers/group");
 const groupsUsersRouter = require("../controllers/group_user");
 const groupsAllegiancesRouter = require("../controllers/group_allegiance");
+const postsRouter = require("../controllers/post");
 
 // Internal middleware
 const errorHandler = require("../middleware/errorHandling");
@@ -28,6 +29,7 @@ server.use("/api/allegiances", authenticate, allegiancesRouter);
 server.use("/api/groups", authenticate, groupsRouter);
 server.use("/api/groups_users", authenticate, groupsUsersRouter);
 server.use("/api/groups_allegiances", authenticate, groupsAllegiancesRouter);
+server.use("/api/posts", authenticate, postsRouter);
 
 // sanity check
 server.get("/", (req, res) => {
