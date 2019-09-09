@@ -14,11 +14,7 @@ function add(post) {
 }
 
 function find(filters) {
-	if (Array.isArray(filters.user_id)) {
-		return db("posts")
-			.select("*")
-			.whereIn("user_id", filters.user_id);
-	} else if (Array.isArray(filters.group_id)) {
+	if (Array.isArray(filters.group_id)) {
 		return db("posts")
 			.select("*")
 			.whereIn("group_id", filters.group_id);

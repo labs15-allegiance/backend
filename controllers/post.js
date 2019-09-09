@@ -15,7 +15,13 @@ router
 	.get(async (req, res) => {
 		const { group_id } = req.params;
 		const posts = await Posts.find({ group_id });
-		res.status(200).json({ posts });
+		if (posts.length !== 0) {
+			res.status(200).json({ posts });
+		} else {
+			res.status(404).json({
+				message: "That group does not exist or does not have any posts"
+			});
+		}
 	})
 	.post(validation(postSchema), async (req, res) => {
 		const { group_id } = req.params;
@@ -39,10 +45,34 @@ router
 		}
 	});
 
+router.route("/group_search").post(async (req, res) => {
+	const { group_id } = req.body;
+	if (group_id) {
+		const posts = await Posts.find({ group_id });
+		if (posts.length !== 0) {
+			res.status(200).json({ posts });
+		} else {
+			res.status(404).json({
+				message: "Group(s) provided do(es) not exist or have no posts"
+			});
+		}
+	} else {
+		res.status(400).json({
+			message: "Please include group_id(s) in the body of the request"
+		});
+	}
+});
+
 router.route("/user/:user_id").get(async (req, res) => {
 	const { user_id } = req.params;
 	const posts = await Posts.find({ user_id });
-	res.status(200).json({ posts });
+	if (posts.length !== 0) {
+		res.status(200).json({ posts });
+	} else {
+		res.status(404).json({
+			message: "That user does not exist or has not made any posts"
+		});
+	}
 });
 
 router
