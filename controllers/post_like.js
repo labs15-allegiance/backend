@@ -79,7 +79,7 @@ router
 	.route("/:id")
 	.delete(async (req, res) => {
 		const { id } = req.params;
-		const deleted = await PostsLikes.remove({ id });
+		const deleted = await PostsLikes.remove({ "p_l.id": id });
 		if (deleted) {
 			res.status(200).json({
 				message: "post successfully un-liked."
@@ -92,7 +92,7 @@ router
 	})
 	.get(async (req, res) => {
 		const { id } = req.params;
-		const postLike = await PostsLikes.find({ id }).first();
+		const postLike = await PostsLikes.find({ "p_l.id": id }).first();
 		if (postLike && postLike.id) {
 			res.status(200).json({
 				postLike
