@@ -79,7 +79,7 @@ router
 	.route("/:id")
 	.delete(async (req, res) => {
 		const { id } = req.params;
-		const deleted = await PostsLikes.remove({ "p_l.id": id });
+		const deleted = await PostsLikes.remove({ id });
 		if (deleted) {
 			res.status(200).json({
 				message: "post successfully un-liked."
