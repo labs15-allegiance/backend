@@ -18,6 +18,7 @@ const groupsRouter = require("../controllers/group");
 const groupsUsersRouter = require("../controllers/group_user");
 const groupsAllegiancesRouter = require("../controllers/group_allegiance");
 const postsRouter = require("../controllers/post");
+const postsLikesRouter = require("../controllers/post_like");
 
 // Internal middleware
 const errorHandler = require("../middleware/errorHandling");
@@ -30,6 +31,7 @@ server.use("/api/groups", authenticate, groupsRouter);
 server.use("/api/groups_users", authenticate, groupsUsersRouter);
 server.use("/api/groups_allegiances", authenticate, groupsAllegiancesRouter);
 server.use("/api/posts", authenticate, postsRouter);
+server.use("/api/posts_likes", authenticate, postsLikesRouter);
 
 // sanity check
 server.get("/", (req, res) => {
