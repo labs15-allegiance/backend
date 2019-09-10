@@ -123,13 +123,13 @@ router
 			// Find likes for the post
 			const likes = await PostsLikes.find({ post_id: id });
 			// Find replies for the post
-			const replies = await Replies.find({ post_id: id });
+			const repliesNoLikes = await Replies.find({ post_id: id });
 			// Obtain list of reply ids for reply likes lookup
-			const replyIds = replies.map(reply => reply.id);
+			const replyIds = repliesNoLikes.map(reply => reply.id);
 			// Obtain array of all reply likes from reply IDs specified
 			const repliesLikes = await RepliesLikes.find({ reply_id: replyIds });
 			// Map in likes to the proper reply ids
-			const repliesWithLikes = replies.map(reply => {
+			const replies = repliesNoLikes.map(reply => {
 				return {
 					...reply,
 					replyLikes: repliesLikes.filter(
@@ -138,7 +138,7 @@ router
 				};
 			});
 			// Add likes and replies in as arrays to the post object
-			const postLoaded = { ...post, likes, repliesWithLikes };
+			const postLoaded = { ...post, likes, replies };
 			res.status(200).json({
 				postLoaded
 			});
