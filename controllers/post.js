@@ -95,7 +95,7 @@ router
 	})
 	.get(async (req, res) => {
 		const { id } = req.params;
-		const post = await Posts.find({ id }).first();
+		const post = await Posts.find({ "p.id": id }).first();
 		if (post && post.id) {
 			// Find likes for the post
 			const likes = await PostsLikes.find({ post_id: id });
