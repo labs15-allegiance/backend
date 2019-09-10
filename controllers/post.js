@@ -5,6 +5,7 @@ const Groups = require("../models/groups");
 const Posts = require("../models/posts");
 const PostsLikes = require("../models/posts_likes");
 const Replies = require("../models/replies");
+const RepliesLikes = require("../models/replies_likes");
 
 const router = express.Router();
 
@@ -21,15 +22,32 @@ async function addLikesAndRepliesToPost(posts, error, res) {
 		const allLikes = await PostsLikes.find({ post_id: postIds });
 		// Obtain array of all replies from post IDs specified
 		const allReplies = await Replies.find({ post_id: postIds });
+		// Initiate repliesWithLikes and check if all replies contains entries
+		let repliesWithLikes = [];
+		if (allReplies.length !== 0) {
+			// Obtain list of reply ids for reply likes lookup
+			const replyIds = allReplies.map(reply => reply.id);
+			// Obtain array of all reply likes from reply IDs specified
+			const repliesLikes = await RepliesLikes.find({ reply_id: replyIds });
+			// Map in likes to the proper reply ids
+			repliesWithLikes = allReplies.map(reply => {
+				return {
+					...reply,
+					replyLikes: repliesLikes.filter(
+						replyLike => replyLike.reply_id === reply.id
+					)
+				};
+			});
+		}
 		// Map in likes and replies to the proper post ids
 		const postsLoaded = posts.map(post => {
 			return {
 				...post,
 				likes: allLikes.filter(like => like.post_id === post.id),
-				replies: allReplies.filter(reply => reply.post_id === post.id)
+				replies: repliesWithLikes.filter(reply => reply.post_id === post.id)
 			};
 		});
-		// Return post with likes included
+		// Return post with likes and replies (along with reply likes) included
 		res.status(200).json({ postsLoaded });
 	} else {
 		res.status(404).json({
@@ -105,7 +123,20 @@ router
 			// Find likes for the post
 			const likes = await PostsLikes.find({ post_id: id });
 			// Find replies for the post
-			const replies = await Replies.find({ post_id: id });
+			const repliesNoLikes = await Replies.find({ post_id: id });
+			// Obtain list of reply ids for reply likes lookup
+			const replyIds = repliesNoLikes.map(reply => reply.id);
+			// Obtain array of all reply likes from reply IDs specified
+			const repliesLikes = await RepliesLikes.find({ reply_id: replyIds });
+			// Map in likes to the proper reply ids
+			const replies = repliesNoLikes.map(reply => {
+				return {
+					...reply,
+					replyLikes: repliesLikes.filter(
+						replyLike => replyLike.reply_id === reply.id
+					)
+				};
+			});
 			// Add likes and replies in as arrays to the post object
 			const postLoaded = { ...post, likes, replies };
 			res.status(200).json({
