@@ -30,7 +30,7 @@ router
 			id: user_id
 		}).first();
 		const post = await Posts.find({
-			id: post_id
+			"p.id": post_id
 		}).first();
 		if (user && post) {
 			const newLike = { post_id, user_id };
