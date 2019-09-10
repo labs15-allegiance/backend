@@ -3,6 +3,7 @@ const express = require("express");
 const Users = require("../models/users");
 const Posts = require("../models/posts");
 const Replies = require("../models/replies");
+const RepliesLikes = require("../models/replies_likes");
 
 const router = express.Router();
 
@@ -10,18 +11,35 @@ const validation = require("../middleware/dataValidation");
 
 const { replySchema } = require("../schemas");
 
+async function addLikesToReply(replies, error, res) {
+	if (replies.length !== 0) {
+		// Obtain list of reply ids for likes lookup
+		const replyIds = replies.map(reply => reply.id);
+		// Obtain array of all reply likes from reply IDs specified
+		const repliesLikes = await RepliesLikes.find({ reply_id: replyIds });
+		// Map in likes to the proper reply ids
+		const repliesWithLikes = replies.map(reply => {
+			return {
+				...reply,
+				replyLikes: repliesLikes.filter(
+					replyLike => replyLike.reply_id === reply.id
+				)
+			};
+		});
+		res.status(200).json({ repliesWithLikes });
+	} else {
+		res.status(404).json({
+			message: `That/those ${error} does not exist or does not have any likes`
+		});
+	}
+}
+
 router
 	.route("/post/:post_id")
 	.get(async (req, res) => {
 		const { post_id } = req.params;
 		const replies = await Replies.find({ post_id });
-		if (replies.length !== 0) {
-			res.status(200).json({ replies });
-		} else {
-			res.status(404).json({
-				message: "That post does not exist or does not have any replies"
-			});
-		}
+		addLikesToReply(replies, "post", res);
 	})
 	.post(validation(replySchema), async (req, res) => {
 		const { post_id } = req.params;
@@ -49,13 +67,7 @@ router.route("/post_search").post(async (req, res) => {
 	const { post_id } = req.body;
 	if (post_id) {
 		const replies = await Replies.find({ post_id });
-		if (replies.length !== 0) {
-			res.status(200).json({ replies });
-		} else {
-			res.status(404).json({
-				message: "Post(s) provided do(es) not exist or have no replies"
-			});
-		}
+		addLikesToReply(replies, "post(s)", res);
 	} else {
 		res.status(400).json({
 			message: "Please include post_id(s) in the body of the request"
@@ -66,13 +78,7 @@ router.route("/post_search").post(async (req, res) => {
 router.route("/user/:user_id").get(async (req, res) => {
 	const { user_id } = req.params;
 	const replies = await Replies.find({ user_id });
-	if (replies.length !== 0) {
-		res.status(200).json({ replies });
-	} else {
-		res.status(404).json({
-			message: "That user does not exist or has not replied to any posts"
-		});
-	}
+	addLikesToReply(replies, "user", res);
 });
 
 router
@@ -92,8 +98,12 @@ router
 		const { id } = req.params;
 		const reply = await Replies.find({ "r.id": id }).first();
 		if (reply && reply.id) {
+			// Find likes for the reply
+			const likes = await RepliesLikes.find({ reply_id: id });
+			// Add likes in as array to the reply object
+			const replyWithLikes = { ...reply, likes };
 			res.status(200).json({
-				reply
+				replyWithLikes
 			});
 		} else {
 			res.status(404).json({ message: "That reply does not exist." });
