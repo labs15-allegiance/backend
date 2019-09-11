@@ -94,8 +94,8 @@ router.route("/search/:user_id").get(async (req, res) => {
 	const { user_id } = req.params;
 	// find if user has any groups
 	const groups = await GroupsUsers.find({ user_id });
-	console.log("searching for groups");
 	if (groups.length > 0) {
+		// if groups array is not empty, then send groups as a response
 		res.status(200).json({
 			groups
 		});
@@ -111,6 +111,7 @@ router
 	.put(validation(groupUserSchema), async (req, res) => {
 		const { id } = req.params;
 		const changes = req.body;
+		// Check if a relation between the group and user provided in the body exists
 		const relationExists = await GroupsUsers.find({ "g_u.id": id }).first();
 		if (!relationExists) {
 			res
@@ -123,7 +124,6 @@ router
 	})
 	.delete(async (req, res) => {
 		const { id } = req.params;
-
 		const deleted = await GroupsUsers.remove({ id });
 		if (deleted) {
 			res
