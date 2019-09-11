@@ -31,7 +31,7 @@ router.route("/").post(async (req, res) => {
 		}
 		if (userAllegiances) {
 			// If user is a member of allegiances, map allegiance info to conform names to front end component structure
-			basicAllegianceInfo = userAllegiances.map(group => {
+			basicAllegianceInfo = userAllegiances.map(allegiance => {
 				return {
 					name: allegiance.allegiance_name,
 					image: allegiance.allegiance_image,

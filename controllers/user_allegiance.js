@@ -27,22 +27,25 @@ router
 		}
 	})
 	.post(validation(userAllegianceSchema), async (req, res) => {
-		const { allegiance_id, group_id } = req.body;
+		const { allegiance_id, user_id } = req.body;
+		// Check if allegiance exists
 		const allegiance = await Allegiances.find({
 			id: allegiance_id
 		}).first();
-		const group = await Groups.find({
-			id: group_id
+		// Check if user exists
+		const user = await Users.find({
+			id: user_id
 		}).first();
-		if (allegiance && group) {
-			const newuserAllegiances = await UsersAllegiances.add(req.body);
+		if (allegiance && user) {
+			// If both user and allegiance exists, create new association
+			const newUserAllegiances = await UsersAllegiances.add(req.body);
 			res.status(201).json({
-				newuserAllegiances
+				newUserAllegiances
 			});
 		} else {
 			res.status(404).json({
 				message:
-					"Group id provided or Allegiance id provided does not exist, please double check inputs"
+					"User id provided or Allegiance id provided does not exist, please double check inputs"
 			});
 		}
 	});
@@ -51,29 +54,29 @@ router
 	.route("/:id")
 	.delete(async (req, res) => {
 		const { id } = req.params;
-
 		const deleted = await UsersAllegiances.remove({ id });
 		if (deleted) {
 			res
 				.status(200)
-				.json({ message: "The group to allegiance pairing has been deleted." });
+				.json({ message: "The user to allegiance pairing has been deleted." });
 		} else {
 			res
 				.status(404)
-				.json({ message: "That group to allegiance pairing does not exist." });
+				.json({ message: "That user to allegiance pairing does not exist." });
 		}
 	})
 	.get(async (req, res) => {
 		const { id } = req.params;
+		// Check if user to allegiance pairing exists
 		const userAllegiances = await UsersAllegiances.find({
-			"g_a.id": id
+			"u_a.id": id
 		}).first();
 		if (userAllegiances) {
 			res.status(200).json({ userAllegiances });
 		} else {
 			res
 				.status(404)
-				.json({ message: "That group to allegiance pairing does not exist." });
+				.json({ message: "That user to allegiance pairing does not exist." });
 		}
 	});
 

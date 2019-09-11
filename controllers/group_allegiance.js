@@ -18,7 +18,7 @@ router
 			res.status(200).json({
 				groupAllegiance
 			});
-			// if there are no filters being passed on request body, send entire listing of groups
+			// if there are no filters being passed on request body, send entire listing of associations
 		} else {
 			const groupAllegiance = await GroupsAllegiances.find();
 			res.status(200).json({
