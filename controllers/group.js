@@ -20,6 +20,7 @@ router
 	})
 	.post(validation(groupSchema), async (req, res) => {
 		const { creator_id } = req.body;
+		// Check creator is a valid user in database before proceeding
 		const user = await Users.find({
 			id: creator_id
 		}).first();
@@ -35,25 +36,26 @@ router
 		}
 	});
 
-// endpoint to retrieve groups for search
+// Endpoint to retrieve groups for search
 router.route("/search").post(async (req, res) => {
+	// Branch for location searches
 	if (req.body.column === "location") {
 		// Use zipcodes package to search for zip codes
 		if (zipcodes.lookup(req.body.row)) {
 			const zip = req.body.row;
 
-			console.log(zip);
 			// Takes optional radius from request or sets default
 			const rad = 10 || req.body.radius;
 
 			// Returns an array of zipcodes within mile radius of the zip
 			req.body.row = zipcodes.radius(zip, rad);
 
+			// Gather group ids to prepare for member retrieval
 			const groups = await Groups.search(req.body);
 			const group_id = groups.map(group => group.id);
 
+			// Retrieve members from groups_users table
 			const members = await GroupsUsers.find({ group_id });
-			console.log("getting groups");
 			const groupByFilter = groups.map(group => {
 				return {
 					...group,
@@ -67,6 +69,7 @@ router.route("/search").post(async (req, res) => {
 					zipcodes.distance(b.location, zip)
 			);
 
+			// Return response with groups with loaded group as well as members lists
 			res.status(200).json({
 				groupByFilter,
 				members
@@ -80,7 +83,6 @@ router.route("/search").post(async (req, res) => {
 	// Branch for non location searches
 	else {
 		const groups = await Groups.search(req.body);
-		console.log("getting groups");
 		// Obtain list of group ids
 		const group_id = groups.map(group => group.id);
 		// Obtain members of all groups retrieved
@@ -177,6 +179,7 @@ router
 			};
 		});
 		if (group && group.id) {
+			// Return group, allegiance, and member information
 			res.status(200).json({
 				group,
 				allegiances,

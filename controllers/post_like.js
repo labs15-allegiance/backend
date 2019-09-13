@@ -14,6 +14,7 @@ router
 	.route("/post/:post_id")
 	.get(async (req, res) => {
 		const { post_id } = req.params;
+		// Find all likes for a specific post
 		const postLikes = await PostsLikes.find({ post_id });
 		if (postLikes.length !== 0) {
 			res.status(200).json({ postLikes });
@@ -26,13 +27,16 @@ router
 	.post(validation(postLikeSchema), async (req, res) => {
 		const { post_id } = req.params;
 		const { user_id } = req.body;
+		// Check that user provided exists
 		const user = await Users.find({
 			id: user_id
 		}).first();
+		// Check that post provided exists
 		const post = await Posts.find({
 			"p.id": post_id
 		}).first();
 		if (user && post) {
+			// If both user and post exists, create new association
 			const newLike = { post_id, user_id };
 			const likeResult = await PostsLikes.add(newLike);
 			res.status(201).json({
@@ -45,6 +49,7 @@ router
 		}
 	});
 
+// Endpoint for searching likes of multiple posts
 router.route("/post_search").post(async (req, res) => {
 	const { post_id } = req.body;
 	if (post_id) {
@@ -65,6 +70,7 @@ router.route("/post_search").post(async (req, res) => {
 
 router.route("/user/:user_id").get(async (req, res) => {
 	const { user_id } = req.params;
+	// Find all likes for a specific user
 	const postsLikes = await PostsLikes.find({ user_id });
 	if (postsLikes.length !== 0) {
 		res.status(200).json({ postsLikes });

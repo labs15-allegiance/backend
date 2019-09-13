@@ -28,13 +28,16 @@ router
 	})
 	.post(validation(groupAllegianceSchema), async (req, res) => {
 		const { allegiance_id, group_id } = req.body;
+		// Check if allegiance exists
 		const allegiance = await Allegiances.find({
 			id: allegiance_id
 		}).first();
+		// Check if group exists
 		const group = await Groups.find({
 			id: group_id
 		}).first();
 		if (allegiance && group) {
+			// if both allegiance and group exists, create relationship between the two
 			const newGroupAllegiances = await GroupsAllegiances.add(req.body);
 			res.status(201).json({
 				newGroupAllegiances
@@ -51,7 +54,6 @@ router
 	.route("/:id")
 	.delete(async (req, res) => {
 		const { id } = req.params;
-
 		const deleted = await GroupsAllegiances.remove({ id });
 		if (deleted) {
 			res
@@ -65,6 +67,7 @@ router
 	})
 	.get(async (req, res) => {
 		const { id } = req.params;
+		// Check if group to allegiance pairing exists
 		const groupAllegiances = await GroupsAllegiances.find({
 			"g_a.id": id
 		}).first();

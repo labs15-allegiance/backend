@@ -66,9 +66,11 @@ router
 	.post(validation(postSchema), async (req, res) => {
 		const { group_id } = req.params;
 		const { user_id, post_content } = req.body;
+		// Check that user provided exists
 		const user = await Users.find({
 			id: user_id
 		}).first();
+		// Check that group provided exists
 		const group = await Groups.find({
 			id: group_id
 		}).first();
