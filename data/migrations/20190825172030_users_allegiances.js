@@ -20,7 +20,7 @@ exports.up = function(knex) {
 			.onDelete("CASCADE")
 			.onUpdate("CASCADE");
 
-		users_allegiances.unique(["user_id, allegiance_id"]);
+		users_allegiances.unique(["user_id", "allegiance_id"]);
 	});
 };
 

@@ -21,7 +21,7 @@ exports.up = function(knex) {
 			.onUpdate("CASCADE");
 		groups_users.timestamps(true, true);
 
-		groups_users.unique(["user_id, group_id"]);
+		groups_users.unique(["user_id", "group_id"]);
 	});
 };
 
