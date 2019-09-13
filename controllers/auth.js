@@ -45,7 +45,8 @@ router.route("/").post(async (req, res) => {
 	} else {
 		// Add user to database if email does not exist
 		const newUser = await Users.add(req.body);
-		res.status(201).json({ newUser });
+		const userInfo = { newUser };
+		res.status(201).json({ userInfo });
 	}
 });
 
