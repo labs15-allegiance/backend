@@ -20,6 +20,8 @@ exports.up = function(knex) {
 			.onDelete("CASCADE")
 			.onUpdate("CASCADE");
 		groups_users.timestamps(true, true);
+
+		groups_users.unique(["user_id", "group_id"]);
 	});
 };
 
