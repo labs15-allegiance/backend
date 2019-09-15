@@ -18,7 +18,7 @@ router
 			res.status(200).json({
 				groupAllegiance
 			});
-			// if there are no filters being passed on request body, send entire listing of users
+			// if there are no filters being passed on request body, send entire listing of associations
 		} else {
 			const groupAllegiance = await GroupsAllegiances.find();
 			res.status(200).json({
@@ -28,13 +28,16 @@ router
 	})
 	.post(validation(groupAllegianceSchema), async (req, res) => {
 		const { allegiance_id, group_id } = req.body;
+		// Check if allegiance exists
 		const allegiance = await Allegiances.find({
 			id: allegiance_id
 		}).first();
+		// Check if group exists
 		const group = await Groups.find({
 			id: group_id
 		}).first();
 		if (allegiance && group) {
+			// if both allegiance and group exists, create relationship between the two
 			const newGroupAllegiances = await GroupsAllegiances.add(req.body);
 			res.status(201).json({
 				newGroupAllegiances
@@ -49,23 +52,8 @@ router
 
 router
 	.route("/:id")
-	// put might be useless - what situation would we use this?
-	.put(validation(groupAllegianceSchema), async (req, res) => {
-		const { id } = req.params;
-		const changes = req.body;
-		const relationExists = await GroupsAllegiances.find({ id }).first();
-		if (!relationExists) {
-			res
-				.status(404)
-				.json({ message: "That group to allegiance pairing does not exist." });
-		} else {
-			const updated = await GroupsAllegiances.update({ id }, changes);
-			res.status(200).json({ updated });
-		}
-	})
 	.delete(async (req, res) => {
 		const { id } = req.params;
-
 		const deleted = await GroupsAllegiances.remove({ id });
 		if (deleted) {
 			res
@@ -79,8 +67,11 @@ router
 	})
 	.get(async (req, res) => {
 		const { id } = req.params;
-		const groupAllegiances = await GroupsAllegiances.find({ id }).first();
-		if (groupAllegiances && groupAllegiances.id) {
+		// Check if group to allegiance pairing exists
+		const groupAllegiances = await GroupsAllegiances.find({
+			"g_a.id": id
+		}).first();
+		if (groupAllegiances) {
 			res.status(200).json({ groupAllegiances });
 		} else {
 			res

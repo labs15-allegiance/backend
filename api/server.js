@@ -14,9 +14,14 @@ const authenticate = require("../middleware/auth-middleware");
 const usersRouter = require("../controllers/user");
 const authRouter = require("../controllers/auth");
 const allegiancesRouter = require("../controllers/allegiance");
+const usersAllegiancesRouter = require("../controllers/user_allegiance");
 const groupsRouter = require("../controllers/group");
 const groupsUsersRouter = require("../controllers/group_user");
 const groupsAllegiancesRouter = require("../controllers/group_allegiance");
+const postsRouter = require("../controllers/post");
+const postsLikesRouter = require("../controllers/post_like");
+const repliesRouter = require("../controllers/reply");
+const repliesLikesRouter = require("../controllers/reply_like");
 
 // Internal middleware
 const errorHandler = require("../middleware/errorHandling");
@@ -25,9 +30,14 @@ const errorHandler = require("../middleware/errorHandling");
 server.use("/api/users", authenticate, usersRouter);
 server.use("/api/auth", authRouter);
 server.use("/api/allegiances", authenticate, allegiancesRouter);
+server.use("/api/users_allegiances", authenticate, usersAllegiancesRouter);
 server.use("/api/groups", authenticate, groupsRouter);
 server.use("/api/groups_users", authenticate, groupsUsersRouter);
 server.use("/api/groups_allegiances", authenticate, groupsAllegiancesRouter);
+server.use("/api/posts", authenticate, postsRouter);
+server.use("/api/posts_likes", authenticate, postsLikesRouter);
+server.use("/api/replies", authenticate, repliesRouter);
+server.use("/api/replies_likes", authenticate, repliesLikesRouter);
 
 // sanity check
 server.get("/", (req, res) => {
