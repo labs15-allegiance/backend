@@ -249,7 +249,7 @@ exports.seed = function(knex) {
       allegiance_name: "St. Louis Cardinals",
       sport: "MLB",
       image:
-        "https://cdn.bleacherreport.net/images/team_logos/328x328/st._louis_cardinals.png"
+        "https://cdn.bleacherreport.net/images/team_logos/328x328/st_louis_cardinals.png"
     },
     {
       allegiance_name: "Arizona Diamondbacks",
@@ -505,10 +505,10 @@ exports.seed = function(knex) {
         "https://cdn.bleacherreport.net/images/team_logos/328x328/orlando_magic.png"
     },
     {
-      allegiance_name: "Philadelphia Sixers",
+      allegiance_name: "Philadelphia 76ers",
       sport: "NBA",
       image:
-        "https://cdn.bleacherreport.net/images/team_logos/328x328/philadelphia_sixers.png"
+        "https://cdn.bleacherreport.net/images/team_logos/328x328/philadelphia_76ers.png"
     },
     {
       allegiance_name: "Phoenix Suns",
@@ -701,7 +701,7 @@ exports.seed = function(knex) {
       allegiance_name: "St. Louis Blues",
       sport: "NHL",
       image:
-        "https://cdn.bleacherreport.net/images/team_logos/328x328/st._louis_blues.png"
+        "https://cdn.bleacherreport.net/images/team_logos/328x328/st_louis_blues.png"
     },
     {
       allegiance_name: "Tampa Bay Lightning",
