@@ -19,6 +19,8 @@ exports.up = function(knex) {
 			.inTable("allegiances")
 			.onDelete("CASCADE")
 			.onUpdate("CASCADE");
+
+		groups_allegiances.unique(["group_id", "allegiance_id"]);
 	});
 };
 
