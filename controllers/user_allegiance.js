@@ -48,6 +48,20 @@ router
           "User id provided or Allegiance id provided does not exist, please double check inputs"
       });
     }
+  })
+  // Delete by user and allegiance IDs
+  .delete(validation(userAllegianceSchema), async (req, res) => {
+    const { user_id, allegiance_id } = req.body;
+    const deleted = await UsersAllegiances.remove({ user_id, allegiance_id });
+    if (deleted) {
+      res
+        .status(200)
+        .json({ message: "The user to allegiance pairing has been deleted." });
+    } else {
+      res
+        .status(404)
+        .json({ message: "That user to allegiance pairing does not exist." });
+    }
   });
 
 router
