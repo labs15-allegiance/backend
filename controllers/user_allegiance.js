@@ -94,4 +94,62 @@ router
     }
   });
 
+// endpoint to retrieve allegiance relationship for logged in user
+router.route("/search").post(async (req, res) => {
+  // check for user_id and allegiance_id in request body
+  const { user_id, allegiance_id } = req.body;
+  // if both user_id and allegiance_id are defined in body move along this branch
+  if (user_id !== undefined && allegiance_id !== undefined) {
+    // find if relation between user and allegiance entered exists, if so return find function from groups_users model
+    const relationExists = await UsersAllegiances.find(req.body).first();
+    if (relationExists) {
+      res.status(200).json({
+        relationExists
+      });
+      // if relation does not already exist, check for user and allegiance existence
+    } else {
+      const user = await Users.find({
+        id: user_id
+      }).first();
+      const allegiance = await Allegiances.find({
+        id: allegiance_id
+      }).first();
+      // if user and allegiance exists, send allegiance information
+      if (user && allegiance) {
+        res.status(200).json({
+          allegiance
+        });
+      } else {
+        res.status(404).json({
+          message:
+            "User id provided or Allegiance id provided does not exist, please double check inputs"
+        });
+      }
+    }
+    // if either user_id and allegiance_id are undefined return 400 message
+  } else {
+    res
+      .status(400)
+      .json({ message: "User_id and allegiance_id must be provided." });
+  }
+});
+
+// endpoint to retrieve all allegiances for a user
+router.route("/search/:user_id").get(async (req, res) => {
+  // obtain user_id from params
+  const { user_id } = req.params;
+  // find if user has any allegiances
+  const allegiances = await UsersAllegiances.find({ user_id });
+  if (allegiances.length > 0) {
+    // if allegiances array is not empty, then send allegiances as a response
+    res.status(200).json({
+      allegiances
+    });
+  } else {
+    res.status(404).json({
+      message: "User id provided does not exist or has no allegiances"
+    });
+  }
+});
+
 module.exports = router;
