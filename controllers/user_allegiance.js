@@ -88,7 +88,7 @@ router.route("/search").post(async (req, res) => {
   if (user_id !== undefined && allegiance_id !== undefined) {
     // find if relation between user and allegiance entered exists, if so return find function from groups_users model
     const relationExists = await UsersAllegiances.find(req.body).first();
-    if (relationExists.length !== 0) {
+    if (relationExists) {
       res.status(200).json({
         relationExists
       });
