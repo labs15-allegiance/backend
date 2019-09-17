@@ -160,24 +160,6 @@ exports.seed = function(knex) {
       user_type: "admin",
       group_id: 13,
       ...dates()
-    },
-    {
-      user_id: 501,
-      user_type: "admin",
-      group_id: 1,
-      ...dates()
-    },
-    {
-      user_id: 501,
-      user_type: "member",
-      group_id: 2,
-      ...dates()
-    },
-    {
-      user_id: 501,
-      user_type: "invited",
-      group_id: 3,
-      ...dates()
     }
   ]);
 };
