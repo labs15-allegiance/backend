@@ -111,17 +111,19 @@ router
       id: req.body.creator_id
     }).first();
     if (!userExists) {
-      res.status(404).json({ message: "User cannot be found" });
+      return res.status(404).json({ message: "User cannot be found" });
+    } else {
+      // Check that group exists
+      const groupExists = await Groups.find({ id }).first();
+      if (!groupExists) {
+        return res.status(404).json({ message: "That group does not exist." });
+      } else {
+        const updated = await Groups.update({ id }, changes);
+        res.status(200).json({
+          updated
+        });
+      }
     }
-    // Check that group exists
-    const groupExists = await Groups.find({ id }).first();
-    if (!groupExists) {
-      return res.status(404).json({ message: "That group does not exist." });
-    }
-    const updated = await Groups.update({ id }, changes);
-    res.status(200).json({
-      updated
-    });
   })
   .delete(async (req, res) => {
     const { id } = req.params;
