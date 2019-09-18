@@ -2,11 +2,7 @@ const server = require("../../api/server");
 const db = require("../../data/db-config");
 const request = require("supertest");
 
-const token = process.env.AUTH0_TEST_TOKEN || "testing access denied";
-
 describe("auth router", () => {
-  let token;
-
   beforeEach(async () => {
     await db.migrate
       .rollback()
@@ -53,7 +49,7 @@ describe("auth router", () => {
       const response = await request(server)
         .post("/api/auth")
         .send(error);
-      //   expect(response.type).toBe("application/json");
+      expect(response.type).toBe("application/json");
       expect(response.status).toBe(400);
     });
   });
