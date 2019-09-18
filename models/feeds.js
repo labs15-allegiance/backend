@@ -110,6 +110,7 @@ function findPostLikes(filters) {
 			.select(
 				"p_l.id",
 				"p.group_id",
+				"p.post_content",
 				"u.id as user_id",
 				"p_l.post_id",
 				"p_l.created_at",
@@ -128,6 +129,7 @@ function findPostLikes(filters) {
 			.select(
 				"p_l.id",
 				"p.group_id",
+				"p.post_content",
 				"u.id as user_id",
 				"p_l.post_id",
 				"p_l.created_at",
@@ -155,6 +157,8 @@ function findReplyLikes(filters) {
 			.select(
 				"r_l.id",
 				"p.group_id",
+				"p.post_content",
+				"r.reply_content",
 				"u.id as user_id",
 				"r_l.reply_id",
 				"r_l.created_at",
@@ -174,6 +178,8 @@ function findReplyLikes(filters) {
 			.select(
 				"r_l.id",
 				"p.group_id",
+				"p.post_content",
+				"r.reply_content",
 				"u.id as user_id",
 				"r_l.reply_id",
 				"r_l.created_at",
