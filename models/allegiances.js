@@ -10,7 +10,7 @@ module.exports = {
 function add(allegiance) {
   return db("allegiances")
     .insert(allegiance, ["*"])
-    .then(u => find({ id: u[0].id }).first());
+    .then(a => find({ id: a[0].id }).first());
 }
 
 function find(filters) {
@@ -35,8 +35,7 @@ function update(filter, changes) {
   return db("allegiances")
     .update(changes, "*")
     .where(filter)
-    .then(u => find({ id: u[0].id }).first())
-    
+    .then(a => find({ id: a[0].id }).first());
 }
 
 function remove(filter) {

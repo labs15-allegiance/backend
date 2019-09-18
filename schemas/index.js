@@ -32,7 +32,9 @@ const groupSchema = Joi.object().keys({
     .integer()
     .min(1)
     .required(),
-  image: Joi.string().allow(null)
+  image: Joi.string().allow(null),
+  acronym: Joi.string().allow(null),
+  description: Joi.string().allow(null)
 });
 
 const allegianceSchema = Joi.object().keys({
@@ -44,6 +46,17 @@ const allegianceSchema = Joi.object().keys({
 
 const groupAllegianceSchema = Joi.object().keys({
   group_id: Joi.number()
+    .integer()
+    .min(1)
+    .required(),
+  allegiance_id: Joi.number()
+    .integer()
+    .min(1)
+    .required()
+});
+
+const userAllegianceSchema = Joi.object().keys({
+  user_id: Joi.number()
     .integer()
     .min(1)
     .required(),
@@ -140,6 +153,7 @@ module.exports = {
   groupSchema,
   allegianceSchema,
   groupAllegianceSchema,
+  userAllegianceSchema,
   groupUserSchema,
   postSchema,
   postLikeSchema,
