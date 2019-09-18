@@ -5,6 +5,13 @@ const userSchema = Joi.object().keys({
   email: Joi.string()
     .email({ minDomainSegments: 2 })
     .required(),
+  first_name: Joi.string()
+    // Allows case-insensitive a-z chars, spaces, apostrophes and dashes
+    .regex(/^[a-z\ \'\-]*$/i)
+    .allow(null),
+  last_name: Joi.string()
+    .regex(/^[a-z\ \'\-]*$/i)
+    .allow(null),
   location: Joi.string()
     .alphanum()
     .required(),
