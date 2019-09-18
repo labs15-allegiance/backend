@@ -4,7 +4,7 @@ const request = require("supertest");
 
 const token = process.env.AUTH0_TEST_TOKEN || "testing access denied";
 
-describe.skip("user router", () => {
+describe("user router", () => {
   beforeEach(async () => {
     await db.migrate.rollback();
     await db.migrate.latest();

@@ -2,7 +2,7 @@ const server = require("../../api/server");
 const db = require("../../data/db-config");
 const request = require("supertest");
 
-describe.skip("auth router", () => {
+describe("auth router", () => {
   beforeEach(async () => {
     await db.migrate.rollback();
     await db.migrate.latest();
