@@ -29,7 +29,7 @@ async function addLikesToReply(repliesNoLikes, error, res) {
 		res.status(200).json({ replies });
 	} else {
 		res.status(404).json({
-			message: `That/those ${error} does not exist or does not have any likes`
+			message: `That/those ${error} does not exist or does not have any replies`
 		});
 	}
 }
