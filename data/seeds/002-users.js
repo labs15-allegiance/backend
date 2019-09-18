@@ -12,7 +12,7 @@ exports.seed = async function(knex, Promise) {
   // Deletes ALL existing entries
   // Inserts seed entries
   const fakeUsers = [];
-  const count = 50;
+  const count = 500;
   for (let i = 1; i < count; i++) {
     fakeUsers.push(createFakeUser());
   }
