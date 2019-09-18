@@ -6,16 +6,19 @@ const token = process.env.AUTH0_TEST_TOKEN || "testing access denied";
 
 describe("auth router", () => {
   let token;
+
+  beforeEach(async () => {
+    await db.migrate
+      .rollback()
+      .then(() => db.migrate.latest().then(() => db.seed.run()));
+  });
+
+  afterEach(async () => {
+    await db.migrate.rollback();
+  });
+
   it("db environment set to testing", () => {
     expect(process.env.DB_ENV).toBe("testing");
-  });
-
-  beforeAll(() => {
-    return db.migrate.latest();
-  });
-
-  afterAll(() => {
-    return db.migrate.rollback();
   });
 
   describe("POST /api/auth", () => {
@@ -28,7 +31,7 @@ describe("auth router", () => {
         .send(newUser);
       expect(response.type).toBe("application/json");
       expect(response.status).toBe(201);
-      expect(response.body.newUser).toBeTruthy();
+      expect(response.body.userInfo.newUser).toBeTruthy();
     });
 
     it("returns current user if successful and user email already exists", async () => {
@@ -39,8 +42,8 @@ describe("auth router", () => {
         .post("/api/auth")
         .send(currentUser);
       expect(response.type).toBe("application/json");
-      expect(response.status).toBe(200);
-      expect(response.body.currentUser).toBeTruthy();
+      expect(response.status).toBe(201);
+      expect(response.body.userInfo.newUser).toBeTruthy();
     });
 
     it("returns 400 error if email is not defined", async () => {
