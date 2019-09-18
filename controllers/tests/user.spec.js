@@ -18,7 +18,7 @@ describe("user router", () => {
         .set({ Authorization: `Bearer ${token}` });
       expect(response.type).toBe("application/json");
       expect(response.status).toBe(200);
-      expect(response.body.users.length).toEqual(500);
+      expect(response.body.users.length).toEqual(50);
     });
     it("fails without valid authentication", async () => {
       const response = await request(server).get("/api/users");
