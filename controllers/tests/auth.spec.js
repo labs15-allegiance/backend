@@ -2,15 +2,11 @@ const server = require("../../api/server");
 const db = require("../../data/db-config");
 const request = require("supertest");
 
-describe("auth router", () => {
+describe.skip("auth router", () => {
   beforeEach(async () => {
-    await db.migrate
-      .rollback()
-      .then(() => db.migrate.latest().then(() => db.seed.run()));
-  });
-
-  afterEach(async () => {
     await db.migrate.rollback();
+    await db.migrate.latest();
+    return db.seed.run();
   });
 
   it("db environment set to testing", () => {

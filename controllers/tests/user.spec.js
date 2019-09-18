@@ -4,15 +4,11 @@ const request = require("supertest");
 
 const token = process.env.AUTH0_TEST_TOKEN || "testing access denied";
 
-describe("user router", () => {
+describe.skip("user router", () => {
   beforeEach(async () => {
-    await db.migrate
-      .rollback()
-      .then(() => db.migrate.latest().then(() => db.seed.run()));
-  });
-
-  afterEach(async () => {
     await db.migrate.rollback();
+    await db.migrate.latest();
+    return db.seed.run();
   });
 
   describe("GET /api/users", () => {
