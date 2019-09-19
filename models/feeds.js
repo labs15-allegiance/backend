@@ -22,14 +22,15 @@ function findPosts(filters) {
 			.select(
 				"p.id",
 				"u.id as user_id",
-				"g.group_name",
 				"p.group_id",
+				"g.group_name",
+				"g.image as group_image",
 				"p.post_content",
 				"p.created_at",
 				"p.updated_at",
 				"u.first_name",
 				"u.last_name",
-				"u.image"
+				"u.image as user_image"
 			)
 			.where("p.created_at", ">=", ts)
 			.whereIn("p.group_id", filters.group_id);
@@ -41,14 +42,15 @@ function findPosts(filters) {
 			.select(
 				"p.id",
 				"u.id as user_id",
-				"g.group_name",
 				"p.group_id",
+				"g.group_name",
+				"g.image as group_image",
 				"p.post_content",
 				"p.created_at",
 				"p.updated_at",
 				"u.first_name",
 				"u.last_name",
-				"u.image"
+				"u.image as user_image"
 			)
 			.where("p.created_at", ">=", ts)
 			.where("p.group_id", filters.group_id);
@@ -65,9 +67,12 @@ function findReplies(filters) {
 		return db("replies as r")
 			.leftJoin("users as u", "u.id", "r.user_id")
 			.leftJoin("posts as p", "p.id", "r.post_id")
+			.leftJoin("groups as g", "g.id", "p.group_id")
 			.select(
 				"r.id",
 				"p.group_id",
+				"g.group_name",
+				"g.image as group_image",
 				"u.id as user_id",
 				"r.post_id",
 				"p.post_content",
@@ -76,7 +81,7 @@ function findReplies(filters) {
 				"r.updated_at",
 				"u.first_name",
 				"u.last_name",
-				"u.image"
+				"u.image as user_image"
 			)
 			.where("r.created_at", ">=", ts)
 			.whereIn("p.group_id", filters.group_id);
@@ -85,9 +90,12 @@ function findReplies(filters) {
 		return db("replies as r")
 			.leftJoin("users as u", "u.id", "r.user_id")
 			.leftJoin("posts as p", "p.id", "r.post_id")
+			.leftJoin("groups as g", "g.id", "p.group_id")
 			.select(
 				"r.id",
 				"p.group_id",
+				"g.group_name",
+				"g.image as group_image",
 				"u.id as user_id",
 				"r.post_id",
 				"p.post_content",
@@ -96,7 +104,7 @@ function findReplies(filters) {
 				"r.updated_at",
 				"u.first_name",
 				"u.last_name",
-				"u.image"
+				"u.image as user_image"
 			)
 			.where("r.created_at", ">=", ts)
 			.where("p.group_id", filters.group_id);
@@ -122,6 +130,7 @@ function findPostLikes(filters) {
 					"p_l.id",
 					"p.group_id",
 					"g.group_name",
+					"g.image as group_image",
 					"p.post_content",
 					"liker.id as liker_id",
 					"poster.id as poster_id",
@@ -152,6 +161,7 @@ function findPostLikes(filters) {
 					"p_l.id",
 					"p.group_id",
 					"g.group_name",
+					"g.image as group_image",
 					"p.post_content",
 					"liker.id as liker_id",
 					"poster.id as poster_id",
@@ -186,9 +196,12 @@ function findReplyLikes(filters) {
 				// replier shares user_id with replies table
 				.leftJoin("users as replier", "replier.id", "r.user_id")
 				.leftJoin("posts as p", "p.id", "r.post_id")
+				.leftJoin("groups as g", "g.id", "p.group_id")
 				.select(
 					"r_l.id",
 					"p.group_id",
+					"g.group_name",
+					"g.image as group_image",
 					"p.post_content",
 					"r.reply_content",
 					"liker.id as liker_id",
@@ -216,9 +229,12 @@ function findReplyLikes(filters) {
 				// replier shares user_id with replies table
 				.leftJoin("users as replier", "replier.id", "r.user_id")
 				.leftJoin("posts as p", "p.id", "r.post_id")
+				.leftJoin("groups as g", "g.id", "p.group_id")
 				.select(
 					"r_l.id",
 					"p.group_id",
+					"g.group_name",
+					"g.image as group_image",
 					"p.post_content",
 					"r.reply_content",
 					"liker.id as liker_id",
