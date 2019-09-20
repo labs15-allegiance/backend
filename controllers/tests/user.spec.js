@@ -6,11 +6,9 @@ const token = process.env.AUTH0_TEST_TOKEN || "testing access denied";
 
 describe("user router", () => {
   beforeEach(async () => {
-    await db.migrate.latest().then(() => db.seed.run());
-  });
-
-  afterEach(async () => {
     await db.migrate.rollback();
+    await db.migrate.latest();
+    return db.seed.run();
   });
 
   describe("GET /api/users", () => {
@@ -20,38 +18,12 @@ describe("user router", () => {
         .set({ Authorization: `Bearer ${token}` });
       expect(response.type).toBe("application/json");
       expect(response.status).toBe(200);
-      expect(response.body.users.length).toEqual(500);
+      expect(response.body.users.length).toEqual(50);
     });
     it("fails without valid authentication", async () => {
       const response = await request(server).get("/api/users");
       expect(response.status).toBe(500);
       expect(response.body).toEqual({});
-    });
-  });
-  describe("POST /api/users", () => {
-    const newUser = {
-      username: "LesterTheTester",
-      email: "testing@gmail.com",
-      location: "77338"
-    };
-    it("returns the newly created user if successful", async () => {
-      const response = await request(server)
-        .post("/api/users")
-        .send(newUser)
-        .set({ Authorization: `Bearer ${token}` });
-      expect(response.type).toBe("application/json");
-      expect(response.status).toBe(201);
-      expect(response.body.newUser.id).toBe(501);
-    });
-    it("returns 400 status if required fields are not submitted", async () => {
-      const response = await request(server)
-        .post("/api/users")
-        .send({ ...newUser, email: null })
-        .set({ Authorization: `Bearer ${token}` });
-      expect(response.status).toBe(400);
-      expect(response.body.error).toBe(
-        'Error during POST at /api/users: "email" must be a string'
-      );
     });
   });
 

@@ -22,9 +22,10 @@ router
     const allegianceExists = await Allegiances.find({ id }).first();
     if (!allegianceExists) {
       res.status(404).json({ message: "That resource does not exist." });
+    } else {
+      const updated = await Allegiances.update({ id }, req.body);
+      res.status(200).json({ updated });
     }
-    const updated = await Allegiances.update({ id }, req.body);
-    res.status(200).json({ updated });
   })
   .delete(async (req, res) => {
     const { id } = req.params;
