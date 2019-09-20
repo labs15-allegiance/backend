@@ -6,10 +6,11 @@ const userSchema = Joi.object().keys({
 		.email({ minDomainSegments: 2 })
 		.required(),
 	first_name: Joi.string()
-		.alphanum()
+		// Allows case-insensitive a-z chars, spaces, apostrophes and dashes
+		.regex(/^[a-z\ \'\-]*$/i)
 		.allow(null),
 	last_name: Joi.string()
-		.alphanum()
+		.regex(/^[a-z\ \'\-]*$/i)
 		.allow(null),
 	location: Joi.string()
 		.alphanum()
