@@ -4,13 +4,11 @@ const request = require("supertest");
 
 const token = process.env.AUTH0_TEST_TOKEN || "testing access denied";
 
-describe.skip("group router", () => {
-  beforeEach(() => {
-    return db.migrate.latest().then(() => db.seed.run());
-  });
-
-  afterEach(() => {
-    return db.migrate.rollback();
+describe("group router", () => {
+  beforeEach(async () => {
+    await db.migrate.rollback();
+    await db.migrate.latest();
+    return db.seed.run();
   });
 
   describe("GET /api/groups", () => {
@@ -22,12 +20,13 @@ describe.skip("group router", () => {
       expect(response.status).toBe(200);
       expect(response.body.groups.length).toBeTruthy();
     });
-    it.skip("fails without valid authentication", async () => {
+    it("fails without valid authentication", async () => {
       const response = await request(server).get("/api/groups");
       expect(response.status).toBe(500);
       expect(response.body).toEqual({});
     });
   });
+
   describe("POST /api/groups", () => {
     const newGroup = {
       group_name: "Yanks in Boston",
@@ -71,7 +70,7 @@ describe.skip("group router", () => {
 
     it("returns 404 if group not found", async () => {
       const response = await request(server)
-        .put("/api/groups/10000")
+        .put("/api/groups/1000")
         .send(changes)
         .set({ Authorization: `Bearer ${token}` });
       expect(response.status).toBe(404);
@@ -99,7 +98,7 @@ describe.skip("group router", () => {
   });
 
   describe("DELETE /api/groups/:id", () => {
-    it("returns success message if succesful", async () => {
+    it("returns success message if successful", async () => {
       const response = await request(server)
         .delete("/api/groups/1")
         .set({ Authorization: `Bearer ${token}` });
