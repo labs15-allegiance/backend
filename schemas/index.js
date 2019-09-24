@@ -6,17 +6,20 @@ const userSchema = Joi.object().keys({
 		.email({ minDomainSegments: 2 })
 		.required(),
 	first_name: Joi.string()
-		.alphanum()
+		// Allows case-insensitive a-z chars, spaces, apostrophes and dashes
+		.regex(/^[a-z\ \'\-]*$/i)
 		.allow(null),
 	last_name: Joi.string()
-		.alphanum()
+		.regex(/^[a-z\ \'\-]*$/i)
 		.allow(null),
 	location: Joi.string()
 		.alphanum()
 		.required(),
 	image: Joi.string().allow(null),
 	banner_image: Joi.string().allow(null),
-	bio: Joi.string().allow(null)
+	bio: Joi.string().allow(null),
+	// Use any for notification check as default date.timestamp does not work for ISO format
+	notification_check: Joi.any().allow(null)
 });
 
 const groupSchema = Joi.object().keys({
@@ -70,8 +73,9 @@ const groupUserSchema = Joi.object().keys({
 		.integer()
 		.min(1)
 		.required(),
-	// Would like to add valid options below once we know what they are
-	user_type: Joi.string().required(),
+	user_type: Joi.string()
+		.required()
+		.valid("admin", "member", "invited"),
 	group_id: Joi.number()
 		.integer()
 		.min(1)
