@@ -2,12 +2,13 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
+const compression = require('compression')
 
 // Server instance
 const server = express();
 
 // Library Middleware
-server.use(cors(), helmet(), express.json());
+server.use(cors(), helmet(), express.json(), compression());
 const authenticate = require("../middleware/auth-middleware");
 
 // Routers
