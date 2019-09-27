@@ -26,7 +26,7 @@ This project is deployed using [Heroku](https://heroku.com). Please find Heroku 
 
 ## Getting Started
 
-Before running the server locally, it is recommended that the user reads the documentation embedded within this readme about the [database](#Database) and the [api resources](#api).
+Before running the server locally, it is recommended that the user reads the documentation embedded within this readme about the [database](#Database-and-Data-Model) and the [api resources](#api).
 
 - Clone this repository
 - **npm install** to install all required dependencies (note PostgreSQL must be setup for all actions from this point on)
