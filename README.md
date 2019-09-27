@@ -10,8 +10,8 @@
 
 - [Background](#Background)
 - [Deploy](#Deploy)
-- [Getting Started](#Getting)
-- [Database](#Database)
+- [Getting Started](#Getting-Started)
+- [Database](#Database-and-Data-Model)
 - [API](#api)
   - [Authentication](#Authentication)
   - [Resources](#Resources)
