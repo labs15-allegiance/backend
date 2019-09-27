@@ -42,13 +42,13 @@ The technologies selected (Express, Knex, Node) were chosen for the vibrant docu
 
 See link to diagram of the database model [here](https://dbdiagram.io/d/5d54606dced98361d6dd9a8e). This project uses [PostgreSQL](https://www.postgresql.org/) in both development and production environments. Find documentation for PostgreSQL [here](https://www.postgresql.org/docs/). Note that the user will need to setup environment variables as required by Knex and PostgreSQL.
 
-Sample variables:
-DB_LOCAL=allegiance
-DB_LOCAL_USER=postgres
+Sample variables:  
+DB_LOCAL=allegiance  
+DB_LOCAL_USER=postgres  
 DB_LOCAL_PASSWORD=password
 
-DB_TEST=test
-DB_TEST_USER=postgres
+DB_TEST=test  
+DB_TEST_USER=postgres  
 DB_TEST_PASSWORD=password
 
 ## API
