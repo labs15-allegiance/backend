@@ -1,173 +1,74 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
+# Allegiance API
 
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by. Make sure to delete the numbers by the end of Labs.
+![banner](./logo.png)
 
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-# API Documentation
+> An Express + Node.js API for Allegiance
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+## Table of Contents
 
-## 1️⃣ Getting started
+- [Background](#Background)
+- [Deploy](#Deploy)
+- [Getting Started](#Getting)
+- [Database](#Database)
+- [API](#api)
+  - [Authentication](#Authentication)
+  - [Resources](#Resources)
+- [Maintainers](#maintainers)
+- [License](#license)
 
-To get the server running locally:
+## Background
 
-🚫 adjust these scripts to match your project
+People want to support their favorite teams, talk about sports, and interact with other fans yet conversations are siloed across different channels. It's difficult to find fans and build connections both in person and online. Standard social networks lack features built for the needs of sports fans. We aim to build an app that will allow sports fans to connect with each other through groups and local engagement with other fans that are located nearby.
 
-- Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+## Deploy
 
-### Backend framework goes here
+This project is deployed using [Heroku](https://heroku.com). Please find Heroku documentation [here](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true).
 
-🚫 Why did you choose this framework?
+## Getting Started
 
-- Point One
-- Point Two
-- Point Three
-- Point Four
+Before running the server locally, it is recommended that the user reads the documentation embedded within this readme about the [database](#Database) and the [api resources](#api).
 
-## 2️⃣ Endpoints
+- Clone this repository
+- **npm install** to install all required dependencies (note PostgreSQL must be setup for all actions from this point on)
+- **npx knex migrate:latest** to create tables in the development environment
+- **npx knex seed:run** to populate the database with seed data
+- **npm run server** to start the server locally
 
-See endpoints documentation at:
-https://documenter.getpostman.com/view/8269848/SVmpYhbT?version=latest
+The technologies selected (Express, Knex, Node) were chosen for the vibrant documentation, large base of developer users, and established package ecosystems present for each of the techs.
 
-#### Organization Routes
+## Database and Data Model
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+See link to diagram of the database model [here](https://dbdiagram.io/d/5d54606dced98361d6dd9a8e). This project uses [PostgreSQL](https://www.postgresql.org/) in both development and production environments. Find documentation for PostgreSQL [here](https://www.postgresql.org/docs/). Note that the user will need to setup environment variables as required by Knex and PostgreSQL.
 
-#### User Routes
+Sample variables:
+DB_LOCAL=allegiance
+DB_LOCAL_USER=postgres
+DB_LOCAL_PASSWORD=password
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+DB_TEST=test
+DB_TEST_USER=postgres
+DB_TEST_PASSWORD=password
 
-# Data Model
+## API
 
-🚫This is just an example. Replace this with your data model
+### Authentication
 
-#### 2️⃣ ORGANIZATIONS
+Allegiance uses [Auth0](https://auth0.com/) for its authentication and API call processes. Please find Auth0 documentation [here](https://auth0.com/docs), along with the step by step tutorial used in this project [here](https://auth0.com/docs/quickstart/spa/react).
 
----
+### Resources
 
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
-
-#### USERS
+All endpoints have been documented using [Postman](https://www.getpostman.com/). The latest version can be found [here](https://documenter.getpostman.com/view/8269848/SVmpYhbT?version=latest).
 
 ---
 
-```
-{
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
-}
-```
+## Maintainers
 
-## 2️⃣ Actions
+| ![Jarred Stanford](https://github.com/JarredStanford.png) | ![Derek Schwantner](https://github.com/DerekSchwantner.png) | ![Adam McKenney](https://github.com/DaftBeowulf.png) | ![Ang Xu](https://github.com/AngXuDev.png) | ![Dan O'Neill](https://github.com/danpatrickoneill.png)  |
+| --------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------ | -------------------------------------------------------- |
+| [@JarredStanford](https://github.com/JarredStanford)      | [@DerekSchwantner](https://github.com/DerekSchwantner)      | [@DaftBeowulf](https://github.com/DaftBeowulf)       | [@AngXuDev](https://github.com/AngXuDev)   | [@danpatrickoneill](https://github.com/danpatrickoneill) |
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+## License
 
-`getOrgs()` -> Returns all organizations
-
-`getOrg(orgId)` -> Returns a single organization by ID
-
-`addOrg(org)` -> Returns the created org
-
-`updateOrg(orgId)` -> Update an organization by ID
-
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
-
-`getUser(userId)` -> Returns a single user by user ID
-
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user
-
-## 3️⃣ Environment Variables
-
-In order for the app to function correctly, the user must set up their own environment variables.
-
-create a .env file that includes the following:
-
-🚫 These are just examples, replace them with the specifics for your app
-  
- _ STAGING_DB - optional development db for using functionality not available in SQLite
-_ NODE_ENV - set to "development" until ready for "production"
-_ JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;_(-_=+)') for i in range(50)])
-_ SENDGRID_API_KEY - this is generated in your Sendgrid account \* stripe_secret - this is generated in the Stripe dashboard
-
-## Contributing
-
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
-
-Please note we have a [code of conduct](./code_of_conduct.md). Please follow it in all your interactions with the project.
-
-### Issue/Bug Request
-
-**If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
-
-- Check first to see if your issue has already been reported.
-- Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
-- Create a live example of the problem.
-- Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes, where you believe the issue is originating from, and any potential solutions you have considered.
-
-### Feature Requests
-
-We would love to hear from you about new features which would improve this app and further the aims of our project. Please provide as much detail and information as possible to show us why you think your new feature should be implemented.
-
-### Pull Requests
-
-If you have developed a patch, bug fix, or new feature that would improve this app, please submit a pull request. It is best to communicate your ideas with the developers first before investing a great deal of time into a pull request to ensure that it will mesh smoothly with the project.
-
-Remember that this project is licensed under the MIT license, and by submitting a pull request, you agree that your work will be, too.
-
-#### Pull Request Guidelines
-
-- Ensure any install or build dependencies are removed before the end of the layer when doing a build.
-- Update the README.md with details of changes to the interface, including new plist variables, exposed ports, useful file locations and container parameters.
-- Ensure that your code conforms to our existing code conventions and test coverage.
-- Include the relevant issue number, if applicable.
-- You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
-
-### Attribution
-
-These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
-
-## Documentation
-
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+MIT © 2019 Allegiance
